@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automatic Smart Bundles</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>Automatic Smart Bundles</h1>
+            <p class="subtitle">Pay via M-Pesa Till</p>
+        </header>
+
+        <!-- Bundle Selection -->
+        <section class="bundle-section">
+            <h2>Select a Bundle</h2>
+
+            <!-- Ultra Hook Offers -->
+            <div class="category-label">
+                Ultra Hook Offers
+            </div>
+            <div class="bundles">
+                <div class="bundle-option" data-size="1" data-price="5" data-desc="3 hours">
+                    <div class="bundle-size">1GB</div>
+                    <div class="bundle-desc">3 hours</div>
+                    <div class="bundle-price">KES 5</div>
+                </div>
+                <div class="bundle-option" data-size="2" data-price="10" data-desc="6 hours">
+                    <div class="bundle-size">2GB</div>
+                    <div class="bundle-desc">6 hours</div>
+                    <div class="bundle-price">KES 10</div>
+                </div>
+                <div class="bundle-option" data-size="3" data-price="20" data-desc="12 hours">
+                    <div class="bundle-size">3GB</div>
+                    <div class="bundle-desc">12 hours</div>
+                    <div class="bundle-price">KES 20</div>
+                </div>
+            </div>
+
+            <!-- Night / Extended Short-Term -->
+            <div class="category-label">
+                Night / Extended Short-Term
+            </div>
+            <div class="bundles">
+                <div class="bundle-option" data-size="5" data-price="50" data-desc="24 hours">
+                    <div class="bundle-size">5GB</div>
+                    <div class="bundle-desc">24 hours</div>
+                    <div class="bundle-price">KES 50</div>
+                </div>
+                <div class="bundle-option" data-size="7" data-price="70" data-desc="48 hours">
+                    <div class="bundle-size">7GB</div>
+                    <div class="bundle-desc">48 hours</div>
+                    <div class="bundle-price">KES 70</div>
+                </div>
+            </div>
+
+            <!-- Daily Value -->
+            <div class="category-label">
+                Daily Value
+            </div>
+            <div class="bundles">
+                <div class="bundle-option" data-size="10" data-price="100" data-desc="3 days">
+                    <div class="bundle-size">10GB</div>
+                    <div class="bundle-desc">3 days</div>
+                    <div class="bundle-price">KES 100</div>
+                </div>
+                <div class="bundle-option" data-size="15" data-price="150" data-desc="5 days">
+                    <div class="bundle-size">15GB</div>
+                    <div class="bundle-desc">5 days</div>
+                    <div class="bundle-price">KES 150</div>
+                </div>
+            </div>
+
+            <!-- Weekly Steals -->
+            <div class="category-label highlight">
+                Weekly Steals
+            </div>
+            <div class="bundles">
+                <div class="bundle-option" data-size="20" data-price="200" data-desc="7 days" data-badge="Best Value">
+                    <div class="bundle-badge">Best Value</div>
+                    <div class="bundle-size">20GB</div>
+                    <div class="bundle-desc">7 days</div>
+                    <div class="bundle-price">KES 200</div>
+                </div>
+                <div class="bundle-option" data-size="30" data-price="300" data-desc="7 days" data-badge="Most Popular">
+                    <div class="bundle-badge hot">Most Popular</div>
+                    <div class="bundle-size">30GB</div>
+                    <div class="bundle-desc">7 days</div>
+                    <div class="bundle-price">KES 300</div>
+                </div>
+            </div>
+
+            <!-- Monthly Disruptors -->
+            <div class="category-label">
+                Monthly Disruptors
+            </div>
+            <div class="bundles">
+                <div class="bundle-option" data-size="40" data-price="500" data-desc="30 days">
+                    <div class="bundle-size">40GB</div>
+                    <div class="bundle-desc">30 days</div>
+                    <div class="bundle-price">KES 500</div>
+                </div>
+                <div class="bundle-option" data-size="60" data-price="700" data-desc="30 days">
+                    <div class="bundle-size">60GB</div>
+                    <div class="bundle-desc">30 days</div>
+                    <div class="bundle-price">KES 700</div>
+                </div>
+                <div class="bundle-option" data-size="100" data-price="1000" data-desc="30 days">
+                    <div class="bundle-size">100GB</div>
+                    <div class="bundle-desc">30 days</div>
+                    <div class="bundle-price">KES 1,000</div>
+                </div>
+            </div>
+
+            <!-- Combo Dominators -->
+            <div class="category-label highlight">
+                Combo Dominators
+            </div>
+            <div class="bundles">
+                <div class="bundle-option" data-size="20" data-price="500" data-desc="500 mins + unlimited SMS">
+                    <div class="bundle-size">20GB</div>
+                    <div class="bundle-desc">500 mins + unlimited SMS</div>
+                    <div class="bundle-price">KES 500</div>
+                </div>
+                <div class="bundle-option" data-size="40" data-price="800" data-desc="1000 mins + unlimited SMS">
+                    <div class="bundle-size">40GB</div>
+                    <div class="bundle-desc">1000 mins + unlimited SMS</div>
+                    <div class="bundle-price">KES 800</div>
+                </div>
+                <div class="bundle-option" data-size="80" data-price="1500" data-desc="2000 mins + unlimited SMS">
+                    <div class="bundle-size">80GB</div>
+                    <div class="bundle-desc">2000 mins + unlimited SMS</div>
+                    <div class="bundle-price">KES 1,500</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Phone Input -->
+        <section class="phone-section">
+            <label for="phone">Enter phone number to receive bundle</label>
+            <input type="tel" id="phone" placeholder="e.g. 0712345678" maxlength="10">
+        </section>
+
+        <!-- Payment Instructions (Dynamic) -->
+        <section class="payment-section" id="paymentSection" style="display: none;">
+            <h2>Payment Instructions</h2>
+            <div class="steps">
+                <p>1. Go to M-Pesa</p>
+                <p>2. Select <strong>Buy Goods</strong></p>
+                <p>3. Enter Till Number: <span class="till-number">XXXX</span></p>
+                <p>4. Enter Amount: <span class="amount-display">KES ___</span></p>
+            </div>
+        </section>
+
+        <!-- Transaction Code Input -->
+        <section class="transaction-section">
+            <label for="transactionCode">Enter M-Pesa transaction code</label>
+            <input type="text" id="transactionCode" placeholder="e.g. ABC123XYZ" maxlength="20">
+        </section>
+
+        <!-- Submit Button -->
+        <button class="submit-btn" id="submitBtn">I Have Paid</button>
+
+        <!-- Confirmation State -->
+        <div class="confirmation" id="confirmation" style="display: none;">
+            <p>Payment received. Your bundle is being processed.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
