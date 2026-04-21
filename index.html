@@ -1,175 +1,1101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Automatic Smart Bundles</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CS + Math Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f5f8;
+  --bg2: #ffffff;
+  --bg3: #eaeaf0;
+  --bg4: #e0e0e8;
+  --border: rgba(0,0,0,0.08);
+  --border-hover: rgba(0,0,0,0.15);
+  --text: #1a1a24;
+  --text2: #4a4a58;
+  --text3: #8888a0;
+  --accent: #7c5cff;
+  --accent2: #6b4cff;
+  --accent-glow: rgba(124, 92, 255, 0.15);
+  
+  --purple: #7c5cff;
+  --purple-light: #9d85ff;
+  --purple-glow: rgba(124, 92, 255, 0.15);
+  
+  --blue: #4a9cff;
+  --blue-light: #70b4ff;
+  --blue-glow: rgba(74, 156, 255, 0.15);
+  
+  --green: #20c997;
+  --green-light: #40e0b0;
+  --green-glow: rgba(32, 201, 151, 0.15);
+  
+  --coral: #e056c0;
+  --coral-light: #ec80d8;
+  --coral-glow: rgba(224, 86, 192, 0.15);
+  
+  --teal: #12b8c8;
+  --teal-light: #38d0dc;
+  --teal-glow: rgba(18, 184, 200, 0.15);
+  
+  --pink: #f0b430;
+  --pink-light: #f8cc58;
+  --pink-glow: rgba(240, 180, 48, 0.15);
+  
+  --orange: #f08830;
+  --orange-light: #f8ac58;
+  --orange-glow: rgba(240, 136, 48, 0.15);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Geist', sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Subtle grid background with gradient overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ambient glow */
+body::after {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at 20% 20%, rgba(124,92,255,0.06) 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 80%, rgba(74,156,255,0.04) 0%, transparent 50%),
+              radial-gradient(ellipse at 50% 50%, rgba(224,86,192,0.03) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ── HEADER ── */
+header {
+  padding: 4rem 0 3rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+header::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--purple), var(--blue), var(--coral), var(--green), transparent);
+}
+
+.header-inner {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.header-left {}
+
+.eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background: var(--accent);
+}
+
+h1 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--text);
+  letter-spacing: -.02em;
+}
+
+h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.header-meta {
+  font-size: 12px;
+  color: var(--text2);
+  font-family: 'DM Mono', monospace;
+  text-align: right;
+  line-height: 1.8;
+}
+
+.header-meta span {
+  display: block;
+}
+
+/* ── HINT BAR ── */
+.hint-bar {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.hint-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text3);
+  font-family: 'DM Mono', monospace;
+}
+
+.hint-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+  box-shadow: 0 0 6px var(--accent-glow);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.9); }
+}
+
+/* ── TRACK LAYOUT ── */
+.tracks {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.track-heading {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#cs-col .track-heading {
+  color: var(--purple);
+}
+
+#math-col .track-heading {
+  color: var(--green);
+}
+
+.track-count {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* ── PHASE CARD ── */
+.phase {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all .25s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-bottom: 6px;
+  position: relative;
+}
+
+.phase::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  opacity: 0;
+  transition: opacity .25s;
+  pointer-events: none;
+}
+
+.phase:hover {
+  border-color: var(--border-hover);
+  background: var(--bg4);
+  transform: translateX(4px);
+}
+
+.c-purple.phase:hover::before { background: linear-gradient(135deg, rgba(124,92,255,0.08), transparent); opacity: 1; }
+.c-green.phase:hover::before { background: linear-gradient(135deg, rgba(32,201,151,0.08), transparent); opacity: 1; }
+.c-blue.phase:hover::before { background: linear-gradient(135deg, rgba(74,156,255,0.08), transparent); opacity: 1; }
+.c-teal.phase:hover::before { background: linear-gradient(135deg, rgba(18,184,200,0.08), transparent); opacity: 1; }
+.c-coral.phase:hover::before { background: linear-gradient(135deg, rgba(224,86,192,0.08), transparent); opacity: 1; }
+.c-amber.phase:hover::before { background: linear-gradient(135deg, rgba(124,92,255,0.08), transparent); opacity: 1; }
+.c-pink.phase:hover::before { background: linear-gradient(135deg, rgba(240,180,48,0.08), transparent); opacity: 1; }
+.c-orange.phase:hover::before { background: linear-gradient(135deg, rgba(240,136,48,0.08), transparent); opacity: 1; }
+
+.phase.is-open {
+  border-color: var(--border-hover);
+}
+
+.phase-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+}
+
+.phase-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text3);
+  min-width: 28px;
+  flex-shrink: 0;
+}
+
+.phase-info { flex: 1; min-width: 0; }
+
+.phase-name {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.phase-sub {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: 1px;
+  font-family: 'DM Mono', monospace;
+}
+
+.phase-pill {
+  font-size: 10px;
+  font-family: 'DM Mono', monospace;
+  padding: 2px 8px;
+  border-radius: 20px;
+  border: 1px solid;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.phase-arrow {
+  font-size: 11px;
+  color: var(--text3);
+  flex-shrink: 0;
+  transition: transform .2s, color .2s;
+}
+
+.phase.is-open .phase-arrow { 
+  transform: rotate(90deg);
+  color: var(--text);
+}
+
+/* ── PHASE BODY ── */
+.phase-body {
+  display: none;
+  padding: 0 16px 14px;
+  border-top: 1px solid var(--border);
+}
+
+.phase.is-open .phase-body { display: block; }
+
+.topics-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding-top: 12px;
+}
+
+.topic-tag {
+  font-size: 11px;
+  font-family: 'DM Mono', monospace;
+  padding: 4px 10px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+  color: var(--text2);
+  border: 1px solid var(--border);
+  line-height: 1.5;
+  transition: all .2s;
+  display: inline-block;
+  margin: 2px;
+}
+
+.topic-tag.topic-main {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--text);
+}
+
+.topic-group {
+  padding: 6px 8px;
+  margin-bottom: 4px;
+  background: rgba(255,255,255,0.02);
+  border-radius: 6px;
+}
+
+.topic-group .subtopics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  padding-left: 2px;
+}
+
+.topic-tag.sub {
+  font-size: 10px;
+  padding: 2px 6px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.topic-tag:hover {
+  background: linear-gradient(135deg, rgba(124,92,255,0.12), rgba(74,156,255,0.08));
+  color: var(--text);
+  border-color: var(--purple);
+}
+
+.builds-section {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.builds-heading {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 6px;
+}
+
+.build-item {
+  font-size: 12px;
+  color: var(--text2);
+  padding: 3px 0 3px 16px;
+  position: relative;
+  line-height: 1.6;
+  transition: color .2s, transform .2s;
+}
+
+.build-item:hover {
+  color: var(--text);
+  transform: translateX(2px);
+}
+
+.build-item::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 10px;
+  text-shadow: 0 0 6px var(--accent-glow);
+}
+
+/* ── NEW BADGE ── */
+.new-tag {
+  font-size: 9px;
+  font-family: 'DM Mono', monospace;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, rgba(124,92,255,0.12), rgba(224,86,192,0.12));
+  color: var(--purple);
+  border: 1px solid rgba(124,92,255,0.25);
+  margin-left: 8px;
+  vertical-align: middle;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+/* ── COLOR VARIANTS ── */
+.c-purple .phase-pill { color: var(--purple-light); border-color: var(--purple); background: rgba(155,93,229,0.15); }
+.c-green  .phase-pill { color: var(--green-light);  border-color: var(--green);  background: rgba(0,245,212,0.15); }
+.c-blue   .phase-pill { color: var(--blue-light);   border-color: var(--blue);   background: rgba(0,187,249,0.15); }
+.c-teal   .phase-pill { color: var(--teal-light);   border-color: var(--teal);   background: rgba(0,187,249,0.15); }
+.c-coral  .phase-pill { color: var(--coral-light);  border-color: var(--coral);  background: rgba(241,91,181,0.15); }
+.c-amber  .phase-pill { color: var(--accent);       border-color: var(--accent2); background: rgba(245,197,66,0.15); }
+.c-pink   .phase-pill { color: var(--pink-light);   border-color: var(--pink);   background: rgba(254,228,68,0.15); }
+.c-orange .phase-pill { color: var(--orange-light); border-color: var(--orange); background: rgba(252,163,17,0.15); }
+
+/* left accent bar and glow on open */
+.phase.is-open.c-purple { border-left: 3px solid var(--purple); box-shadow: -4px 0 20px var(--purple-glow); }
+.phase.is-open.c-green  { border-left: 3px solid var(--green); box-shadow: -4px 0 20px var(--green-glow); }
+.phase.is-open.c-blue   { border-left: 3px solid var(--blue); box-shadow: -4px 0 20px var(--blue-glow); }
+.phase.is-open.c-teal   { border-left: 3px solid var(--teal); box-shadow: -4px 0 20px var(--teal-glow); }
+.phase.is-open.c-coral  { border-left: 3px solid var(--coral); box-shadow: -4px 0 20px var(--coral-glow); }
+.phase.is-open.c-amber  { border-left: 3px solid var(--accent); box-shadow: -4px 0 20px var(--accent-glow); }
+.phase.is-open.c-pink   { border-left: 3px solid var(--pink); box-shadow: -4px 0 20px var(--pink-glow); }
+.phase.is-open.c-orange { border-left: 3px solid var(--orange); box-shadow: -4px 0 20px var(--orange-glow); }
+
+/* ── CONNECTOR DOT ── */
+.connector {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 29px;
+  margin-bottom: 6px;
+}
+
+.connector-line {
+  width: 1px;
+  height: 10px;
+  background: var(--border);
+}
+
+/* ── MATH NOTE ── */
+.math-note {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text2);
+  padding: 10px 14px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--green);
+  border-radius: 6px;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+/* ── FOOTER ── */
+footer {
+  margin-top: 5rem;
+  padding: 2rem 0;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  position: relative;
+}
+
+footer::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--purple), var(--blue), var(--coral), var(--green), transparent);
+}
+
+.footer-text {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text3);
+}
+
+.progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--text3);
+}
+
+.progress-bar {
+  width: 120px;
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green), var(--teal));
+  border-radius: 2px;
+  transition: width .4s ease;
+  width: 0%;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+header    { animation: fadeUp .5s ease both; }
+.hint-bar { animation: fadeUp .5s .1s ease both; }
+.tracks   { animation: fadeUp .5s .2s ease both; }
+.eyebrow { animation: fadeUp .5s ease both; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1500px) {
+  .tracks { grid-template-columns: 1fr 1fr 1fr 1fr; }
+}
+@media (max-width: 1100px) {
+  .tracks { grid-template-columns: 1fr 1fr 1fr; }
+}
+@media (max-width: 700px) {
+  .tracks { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 450px) {
+  .tracks { grid-template-columns: 1fr; }
+  .header-inner { flex-direction: column; align-items: flex-start; }
+  .header-meta { text-align: left; }
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header>
-            <h1>Automatic Smart Bundles</h1>
-            <p class="subtitle">Pay via M-Pesa Till</p>
-        </header>
+<div class="wrap">
 
-        <!-- Bundle Selection -->
-        <section class="bundle-section">
-            <h2>Select a Bundle</h2>
-
-            <!-- Ultra Hook Offers -->
-            <div class="category-label">
-                Ultra Hook Offers
-            </div>
-            <div class="bundles">
-                <div class="bundle-option" data-size="1" data-price="5" data-desc="3 hours">
-                    <div class="bundle-size">1GB</div>
-                    <div class="bundle-desc">3 hours</div>
-                    <div class="bundle-price">KES 5</div>
-                </div>
-                <div class="bundle-option" data-size="2" data-price="10" data-desc="6 hours">
-                    <div class="bundle-size">2GB</div>
-                    <div class="bundle-desc">6 hours</div>
-                    <div class="bundle-price">KES 10</div>
-                </div>
-                <div class="bundle-option" data-size="3" data-price="20" data-desc="12 hours">
-                    <div class="bundle-size">3GB</div>
-                    <div class="bundle-desc">12 hours</div>
-                    <div class="bundle-price">KES 20</div>
-                </div>
-            </div>
-
-            <!-- Night / Extended Short-Term -->
-            <div class="category-label">
-                Night / Extended Short-Term
-            </div>
-            <div class="bundles">
-                <div class="bundle-option" data-size="5" data-price="50" data-desc="24 hours">
-                    <div class="bundle-size">5GB</div>
-                    <div class="bundle-desc">24 hours</div>
-                    <div class="bundle-price">KES 50</div>
-                </div>
-                <div class="bundle-option" data-size="7" data-price="70" data-desc="48 hours">
-                    <div class="bundle-size">7GB</div>
-                    <div class="bundle-desc">48 hours</div>
-                    <div class="bundle-price">KES 70</div>
-                </div>
-            </div>
-
-            <!-- Daily Value -->
-            <div class="category-label">
-                Daily Value
-            </div>
-            <div class="bundles">
-                <div class="bundle-option" data-size="10" data-price="100" data-desc="3 days">
-                    <div class="bundle-size">10GB</div>
-                    <div class="bundle-desc">3 days</div>
-                    <div class="bundle-price">KES 100</div>
-                </div>
-                <div class="bundle-option" data-size="15" data-price="150" data-desc="5 days">
-                    <div class="bundle-size">15GB</div>
-                    <div class="bundle-desc">5 days</div>
-                    <div class="bundle-price">KES 150</div>
-                </div>
-            </div>
-
-            <!-- Weekly Steals -->
-            <div class="category-label highlight">
-                Weekly Steals
-            </div>
-            <div class="bundles">
-                <div class="bundle-option" data-size="20" data-price="200" data-desc="7 days" data-badge="Best Value">
-                    <div class="bundle-badge">Best Value</div>
-                    <div class="bundle-size">20GB</div>
-                    <div class="bundle-desc">7 days</div>
-                    <div class="bundle-price">KES 200</div>
-                </div>
-                <div class="bundle-option" data-size="30" data-price="300" data-desc="7 days" data-badge="Most Popular">
-                    <div class="bundle-badge hot">Most Popular</div>
-                    <div class="bundle-size">30GB</div>
-                    <div class="bundle-desc">7 days</div>
-                    <div class="bundle-price">KES 300</div>
-                </div>
-            </div>
-
-            <!-- Monthly Disruptors -->
-            <div class="category-label">
-                Monthly Disruptors
-            </div>
-            <div class="bundles">
-                <div class="bundle-option" data-size="40" data-price="500" data-desc="30 days">
-                    <div class="bundle-size">40GB</div>
-                    <div class="bundle-desc">30 days</div>
-                    <div class="bundle-price">KES 500</div>
-                </div>
-                <div class="bundle-option" data-size="60" data-price="700" data-desc="30 days">
-                    <div class="bundle-size">60GB</div>
-                    <div class="bundle-desc">30 days</div>
-                    <div class="bundle-price">KES 700</div>
-                </div>
-                <div class="bundle-option" data-size="100" data-price="1000" data-desc="30 days">
-                    <div class="bundle-size">100GB</div>
-                    <div class="bundle-desc">30 days</div>
-                    <div class="bundle-price">KES 1,000</div>
-                </div>
-            </div>
-
-            <!-- Combo Dominators -->
-            <div class="category-label highlight">
-                Combo Dominators
-            </div>
-            <div class="bundles">
-                <div class="bundle-option" data-size="20" data-price="500" data-desc="500 mins + unlimited SMS">
-                    <div class="bundle-size">20GB</div>
-                    <div class="bundle-desc">500 mins + unlimited SMS</div>
-                    <div class="bundle-price">KES 500</div>
-                </div>
-                <div class="bundle-option" data-size="40" data-price="800" data-desc="1000 mins + unlimited SMS">
-                    <div class="bundle-size">40GB</div>
-                    <div class="bundle-desc">1000 mins + unlimited SMS</div>
-                    <div class="bundle-price">KES 800</div>
-                </div>
-                <div class="bundle-option" data-size="80" data-price="1500" data-desc="2000 mins + unlimited SMS">
-                    <div class="bundle-size">80GB</div>
-                    <div class="bundle-desc">2000 mins + unlimited SMS</div>
-                    <div class="bundle-price">KES 1,500</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Phone Input -->
-        <section class="phone-section">
-            <label for="phone">Enter phone number to receive bundle</label>
-            <input type="tel" id="phone" placeholder="e.g. 0712345678" maxlength="10">
-        </section>
-
-        <!-- Payment Instructions (Dynamic) -->
-        <section class="payment-section" id="paymentSection" style="display: none;">
-            <h2>Payment Instructions</h2>
-            <div class="steps">
-                <p>1. Go to M-Pesa</p>
-                <p>2. Select <strong>Buy Goods</strong></p>
-                <p>3. Enter Till Number: <span class="till-number">XXXX</span></p>
-                <p>4. Enter Amount: <span class="amount-display">KES ___</span></p>
-            </div>
-        </section>
-
-        <!-- Transaction Code Input -->
-        <section class="transaction-section">
-            <label for="transactionCode">Enter M-Pesa transaction code</label>
-            <input type="text" id="transactionCode" placeholder="e.g. ABC123XYZ" maxlength="20">
-        </section>
-
-        <!-- Submit Button -->
-        <button class="submit-btn" id="submitBtn">I Have Paid</button>
-
-        <!-- Confirmation State -->
-        <div class="confirmation" id="confirmation" style="display: none;">
-            <p>Payment received. Your bundle is being processed.</p>
-        </div>
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="header-left">
+        
+        <h1>CS + Math<br>+ <em>Stack</em></h1>
+      </div>
+      <div class="header-meta">
+        <span id="cs-count">29 phases in CS</span>
+        <span id="math-count">13 phases in Math</span>
+        <span id="js-count">24 phases</span>
+        <span id="py-count">22 phases</span>
+        <span id="db-count">25 phases</span>
+        <span id="web-count">21 phases</span>
+        <span id="open-count">0 expanded</span>
+      </div>
     </div>
+  </header>
 
-    <script src="script.js"></script>
+  <!-- HINT BAR -->
+  <div class="hint-bar">
+    <div class="hint-item"><div class="hint-dot"></div>Click any phase to expand topics</div>
+    <div class="hint-item"><div class="hint-dot"></div>Math track runs in parallel — not a prerequisite gate</div>
+    <div class="hint-item"><div class="hint-dot"></div>Phases marked <span class="new-tag">added</span> extend the original curriculum</div>
+  </div>
+
+  <!-- TRACKS -->
+  <div class="tracks">
+    <div id="cs-col">
+      <div class="track-heading">
+        <span>Computer Science</span>
+        <span class="track-count" id="cs-phase-count"></span>
+      </div>
+    </div>
+    <div id="math-col">
+      <div class="track-heading">
+        <span>Mathematics</span>
+        <span class="track-count" id="math-phase-count"></span>
+      </div>
+      <div class="math-note">Pairs naturally with CS.<br>Run alongside, not before.</div>
+    </div>
+    <div id="js-col">
+      <div class="track-heading" style="color: var(--pink);">
+        <span>JS + React + TS + Node</span>
+        <span class="track-count" id="js-phase-count"></span>
+      </div>
+      <div class="math-note" style="border-left-color: var(--pink);">JS → React → TS<br>→ Node + Express</div>
+    </div>
+    <div id="py-col">
+      <div class="track-heading" style="color: var(--orange);">
+        <span>Python + Flask + FastAPI</span>
+        <span class="track-count" id="py-phase-count"></span>
+      </div>
+      <div class="math-note" style="border-left-color: var(--orange);">Python → Flask → FastAPI<br>→ Server-side Python</div>
+    </div>
+    <div id="db-col">
+      <div class="track-heading" style="color: var(--blue);">
+        <span>SQL + Database</span>
+        <span class="track-count" id="db-phase-count"></span>
+      </div>
+      <div class="math-note" style="border-left-color: var(--blue);">SQL → DB Design<br>→ DBMS Concepts</div>
+    </div>
+    <div id="web-col">
+      <div class="track-heading" style="color: var(--teal);">
+        <span>Web + DevOps</span>
+        <span class="track-count" id="web-phase-count"></span>
+      </div>
+      <div class="math-note" style="border-left-color: var(--teal);">Web Dev → Linux → Docker<br>→ K8s → CI/CD → Cloud</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-text">roadmap.ref &nbsp;·&nbsp; personal use</div>
+    <div class="progress-wrap">
+      <div class="progress-label" id="progress-text">0 / 0 expanded</div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+const colors = ['c-purple','c-green','c-blue','c-teal','c-coral','c-amber','c-pink','c-orange'];
+
+const cs = [
+  {badge:"00",name:"Programming foundations",sub:"Python / C++ / Java — core syntax & paradigms",
+   topics:[{name:"Variables, data types & scoping",subtopics:["Static typing vs dynamic typing","Type coercion & conversion","Variable scope (global, local, block)","Shadowing & name resolution","Constants & immutability","Primitive types (int, float, boolean, char)","Reference types & pointers","Heap vs stack allocation"]},{name:"Control flow",subtopics:["Conditionals (if/else, ternary, switch/match)","Loops (for, while, do-while)","Loop control (break, continue, return)","Pattern matching in loops","Early exit strategies","State machine implementation"]},{name:"Functions & parameter passing",subtopics:["Function definition & calls","Parameters by value vs reference","Variable arguments (varargs)","Keyword arguments","Default parameters","Higher-order functions","Callbacks & closures","Lambda functions & anonymous functions","Function composition","Recursion & call stack"]},{name:"OOP fundamentals",subtopics:["Classes & objects","Constructors & destructors","Inheritance & polymorphism","Encapsulation & data hiding","Abstract classes & interfaces","Composition vs inheritance","Mixins & traits","Static vs instance methods","Factory pattern"]},{name:"Memory model",subtopics:["Stack memory & heap","Garbage collection","Memory leaks & prevention","Smart pointers (C++)","Reference counting","Object lifecycle","Shallow vs deep copy","Memory pooling","Stack overflow"]},{name:"Error handling",subtopics:["Exception hierarchy","Try-catch-finally","Custom exceptions","Exception propagation","Checked vs unchecked exceptions","Error vs exception","Logging strategies","Fail-fast design"]},{name:"Debugging",subtopics:["Print debugging","IDE debuggers","Breakpoints & conditional breakpoints","Stack trace analysis","Memory debugging","Profiler-based debugging","Logging frameworks","Assert statements","Unit test debugging"]},{name:"File I/O",subtopics:["Text files & binary files","File streams","JSON parsing & serialization","XML parsing","CSV processing","Binary serialization (pickle, marshal)","Config file handling","Temporary files"]},{name:"Testing fundamentals",subtopics:["Unit tests","Test fixtures","Test setup & teardown","Assertions","Test coverage","Mock objects","Test-driven development","Property-based testing","Integration testing"]},{name:"Build & compilation",subtopics:["Compilation pipeline","Interpreters vs compilers","Just-in-time compilation","Build tools (make, gradle, maven)","Dependency management","Package managers (pip, npm, cargo)","Continuous integration"]}]},
+  {badge:"01",name:"Problem solving",sub:"Thinking like a computer scientist",
+   topics:[{name:"Big-O notation",subtopics:["Asymptotic analysis","Worst-case, average-case, best-case","Time complexity classes","Space complexity","Little-o, omega, theta notation","Amortized analysis","Complexity of recursive algorithms"]},{name:"Two-pointer technique",subtopics:["Same direction pointers","Opposite direction pointers","Fixed window variant","Finding pairs with sum","Removing duplicates","Palindrome verification"]},{name:"Sliding window",subtopics:["Fixed-size sliding window","Dynamic-size sliding window","Maximum sum subarray","Minimum size subarray","Longest substring with conditions"]},{name:"Recursion",subtopics:["Recurrence relations","Memoization","Recursion tree analysis","Tail recursion","Divide & conquer","Backtracking with recursion"]},{name:"Pattern recognition",subtopics:["Problem classification","Similar problem mapping","Reduction to known problems","Abstraction for patterns","Greedy vs DP recognition"]},{name:"Optimization",subtopics:["Brute force reduction","Pruning search space","Trading time for space","Trading space for time","Early termination"]}]},
+  {badge:"02",name:"Data structures",sub:"Core memory models — organize & access data efficiently",
+   topics:[{name:"Arrays",subtopics:["Static arrays","Dynamic arrays","Amortized insertion","Resizing strategies","Multi-dimensional arrays","Sparse arrays","Array slicing"]},{name:"Linked lists",subtopics:["Singly linked lists","Doubly linked lists","Circular linked lists","Skip lists","Dummy head implementation","Sentinel nodes"]},{name:"Stacks & queues",subtopics:["LIFO/FIFO semantics","Array-based implementation","Linked list-based","Deque operations","Circular buffers","Browser history implementation"]},{name:"Hash tables",subtopics:["Hash functions","Collision handling","Separate chaining","Open addressing","Linear probing","Quadratic probing","Double hashing","Load factor & rehashing"]},{name:"Binary search trees",subtopics:["BST properties","Insertion & deletion","Search operations","Traversal (inorder, preorder, postorder)","AVL trees (balance factors)","Red-black trees","Self-balancing rotations"]},{name:"Heaps",subtopics:["Binary heap","Min-heap & max-heap","Heapify operation","Heap sort","Priority queue implementation","Binomial heaps","Fibonacci heaps"]},{name:"Tries",subtopics:["Prefix tree","Radix tree","Compressed tries","Autocomplete implementation","IP routing (CIDR)"]},{name:"Graph representations",subtopics:["Adjacency matrix","Adjacency list","Edge list","Incidence matrix","Space-time tradeoffs","When to use each"]}]},
+  {badge:"03",name:"Algorithms",sub:"Core computational thinking — solve problems systematically",
+   topics:[{name:"Sorting algorithms",subtopics:["Bubble sort & optimization","Insertion sort","Selection sort","Merge sort (divide & conquer)","Quick sort (partitioning)","Heap sort","Counting sort","Radix sort (LSD/MSD)","Tim sort (Python, Java)","External sorting"]},{name:"Binary search",subtopics:["Classic binary search","Lower bound search","Upper bound search","Search in rotated array","Search in sorted matrix","Floor/ceiling calculation"]},{name:"Greedy algorithms",subtopics:["Activity selection problem","Huffman coding","Fractional knapsack","Minimum spanning tree (Prim, Kruskal)","Dijkstra's algorithm"]},{name:"Dynamic programming",subtopics:["Memoization vs tabulation","State definition","State transition","Base cases","Optimal substructure","Overlapping subproblems","DP optimization (Knuth, divide conquer)"]},{name:"Graph algorithms",subtopics:["BFSlevel-order traversal","DFS (pre, in, post order)","Topological sort","Kahn's algorithm","Cycle detection"]},{name:"Shortest path",subtopics:["Dijkstra (non-negative)","Bellman-Ford (negative weights)","Floyd-Warshall (all-pairs)","A* (heuristic)","SPFA"]},{name:"String algorithms",subtopics:["Naive pattern matching","KMP (failure function)","Rabin-Karp (hashing)","Boyer-Moore (bad char, good suffix)","Z-algorithm"]}]},
+  {badge:"04",name:"Digital logic",sub:"Foundation of hardware — 0s and 1s to circuits",
+   topics:[{name:"Number systems",subtopics:["Binary representation","Hex & octal","Signed representation (2's complement)","Floating point (IEEE 754)","BCD encoding","Gray code"]},{name:"Boolean algebra",subtopics:["AND, OR, NOT operations","De Morgan's laws","Boolean identities","Karnaugh maps","Quine-McCluskey method"]},{name:"Logic gates",subtopics:["Basic gates (AND, OR, NOT)","NAND & NOR gate universality","XOR & XNOR","Tri-state buffers","Gate delays"]},{name:"Combinational circuits",subtopics:["Adders (half, full)","Subtractors","Multiplexers (MUX)","Demultiplexers (DEMUX)","Encoders & decoders","Comparators","ALU design"]},{name:"Sequential circuits",subtopics:["Latches (SR, D)","Flip-flops (D, JK, T)","Registers","Counters (synchronous, asynchronous)","Shift registers","State machines"]},{name:"Finite state machines",subtopics:["Mealy machines","Moore machines","State encoding","State minimization","FSM implementation"]}]},
+  {badge:"05",name:"Computer architecture",sub:"CPU & machine design — from transistors to execution",
+   topics:[{name:"CPU structure",subtopics:["Datapath design","Control unit (hardwired, microprogrammed)","Register file design","ALU organization","Bus architecture"]},{name:"Instruction cycle",subtopics:["Fetch cycle","Decode cycle","Execute cycle","Interrupt handling","Pipeline stages"]},{name:"Memory hierarchy",subtopics:["Registers","Cache (L1, L2, L3)","Main memory (RAM)","Secondary storage (SSD, HDD)","Memory organization & interleaving"]},{name:"Cache memory",subtopics:["Direct mapping","Set-associative","Fully associative","Write policies (write-through, write-back)","Replacement policies (LRU, FIFO)","Cache coherency"]},{name:"Pipelining",subtopics:["Pipeline stages","Structural hazards","Data hazards (RAW, WAR, WAW)","Control hazards","Branch prediction (static, dynamic)","Pipeline stalls"]},{name:"Virtual memory",subtopics:["Paging","Page tables","TLB (Translation Lookaside Buffer)","Page replacement algorithms","Segmentation","Page faults"]}]},
+  {badge:"05.5",name:"Embedded systems",sub:"Hardware–software boundary — constrained computing",isNew:true,
+   topics:[{name:"Microcontroller fundamentals",subtopics:["Harvard vs Von Neumann","Register mapping","Interrupt vectors","Clock management","Power modes"]},{name:"GPIO & peripherals",subtopics:["Pin configuration (input/output)","Pull-up/down resistors","Open-drain output","PWM generation","Analog-to-digital conversion"]},{name:"Communication protocols",subtopics:["UART/RS232","SPI (Serial Peripheral Interface)","I2C (Inter-Integrated Circuit)","CAN bus","USB fundamentals"]},{name:"Interrupts",subtopics:["Vectored interrupts","Nested interrupts","Interrupt latency","Debouncing","Priority handling"]},{name:"Real-time constraints",subtopics:["Hard real-time","Soft real-time","Deadline analysis","Worst-case execution time","Jitter measurement"]},{name:"RTOS",subtopics:["Task scheduling","Priority inversion","Priority inheritance","Message queues","Semaphores & mutexes"]}]},
+  {badge:"06",name:"Operating systems",sub:"Software controls hardware — resource management",
+   topics:[{name:"Processes",subtopics:["Process control block","Process states (new, ready, running, blocked, terminated)","Process creation (fork, exec)","Process termination","Inter-process communication"]},{name:"Threads",subtopics:["User threads vs kernel threads","Thread pooling","Thread management","Thread-local storage","Thread cancellation"]},{name:"CPU scheduling",subtopics:["Preemptive vs non-preemptive","FCFS (First Come First Serve)","SJF (Shortest Job First)","Round Robin","Multilevel Queue Scheduling","Lottery scheduling"]},{name:"Memory management",subtopics:["Contiguous allocation","Paging","Segmentation","Page replacement (FIFO, LRU, optimal)","Thrashing","Working set model"]},{name:"File systems",subtopics:["File organization","Directory structures","FAT file system","ext4 file system","NTFS","Journaling"]},{name:"Synchronization",subtopics:["Mutual exclusion","Semaphores","Condition variables","Monitors","Deadlock conditions","Banker's algorithm"]}]},
+  {badge:"06.5",name:"Performance engineering",sub:"Speed & efficiency — optimize the extreme",isNew:true,
+   topics:[{name:"Profiling",subtopics:["Sampling profiling","Instrumented profiling","CPU profiling","Memory profiling","I/O profiling"]},{name:"Cache optimization",subtopics:["Spatial locality","Temporal locality","Prefetching","Cache blocking","Loop tiling","Data layout optimization"]},{name:"SIMD & vectorization",subtopics:["SSE instructions","AVX/AVX-512","NEON (ARM)","Auto-vectorization","Intrinsic functions","Vectorization patterns"]},{name:"Branch optimization",subtopics:["Branch prediction hints","likely/unlikely macros","Loop unrolling","Conditional moves","Predication"]},{name:"Lock-free data structures",subtopics:["Atomic operations (CAS)","Lock-free queues","Lock-free stacks","Michael-Scott queue","Treiber stack"]}]},
+  {badge:"07",name:"Computer networks",sub:"Systems communication — connect & transmit",
+   topics:[{name:"OSI model",subtopics:["Physical layer","Data link layer","Network layer","Transport layer","Session layer","Presentation layer","Application layer"]},{name:"IP addressing",subtopics:["IPv4 addresses","IPv6 addresses","CIDR notation","Subnetting","NAT (Network Address Translation)","Private vs public IPs"]},{name:"TCP vs UDP",subtopics:["Connection-oriented vs connectionless","Reliability","Flow control","Congestion control","State diagrams"]},{name:"Routing",subtopics:["Static routing","RIP (Routing Information Protocol)","OSPF (Open Shortest Path First)","BGP (Border Gateway Protocol)","Routing tables"]},{name:"DNS",subtopics:["DNS resolution","DNS records (A, AAAA, MX, CNAME)","DNS caching","DNSSEC","Load balancing with DNS"]},{name:"HTTP",subtopics:["HTTP methods (GET, POST, PUT, DELETE)","Status codes","Headers","Cookies & sessions","HTTP/2 & HTTP/3"]},{name:"Sockets",subtopics:["TCP socket programming","UDP socket programming","Blocking vs non-blocking","Epoll & kqueue","WebSocket"]}]},
+  {badge:"08",name:"Databases",sub:"Structured persistent data — store & retrieve at scale",
+   topics:[{name:"SQL fundamentals",subtopics:["SELECT statements","INSERT, UPDATE, DELETE","CREATE, ALTER, DROP","WHERE clauses","ORDER BY & GROUP BY"]},{name:"Joins",subtopics:["INNER JOIN","LEFT/RIGHT JOIN","FULL JOIN","CROSS JOIN","Self joins","Join algorithms (nested loop, hash, merge)"]},{name:"Aggregation",subtopics:["GROUP BY","HAVING","Aggregate functions (COUNT, SUM, AVG, MIN, MAX)","Window functions","ROLLUP & CUBE"]},{name:"Indexes",subtopics:["B-tree indexes","Hash indexes","Clustered vs non-clustered","Composite indexes","Index-only scans","Partial indexes"]},{name:"Transactions",subtopics:["ACID properties","Isolation levels","Locking","Deadlock handling","Savepoints","Two-phase commit"]},{name:"Normalization",subtopics:["1NF (First Normal Form)","2NF","3NF","BCNF (Boyce-Codd)","Denormalization strategies"]},{name:"NoSQL",subtopics:["Key-value stores","Document stores (MongoDB)","Column-family (Cassandra)","Graph databases (Neo4j)","CAP theorem"]}]},
+  {badge:"09",name:"Languages & compilers",sub:"How programming languages work — translation & execution",
+   topics:[{name:"Lexical analysis",subtopics:["Tokenization","Regular expressions for tokens","Finite automaton design","Symbol table management","Keyword vs identifier distinction"]},{name:"Parsing",subtopics:["Recursive descent parsing","LL(k) parsers","LR(k) parsers","LALR parsers","Error recovery"]},{name:"AST",subtopics:["AST construction","AST traversal","AST transformation","Visitor pattern","Tree rewriting"]},{name:"Type systems",subtopics:["Static vs dynamic typing","Strong vs weak typing","Type inference","Covariance/contravariance","Type erasure"]},{name:"Memory management",subtopics:["Stack allocation","Heap allocation","Garbage collection algorithms","Reference counting","Mark & sweep","Copying collectors"]},{name:"Code generation",subtopics:["Intermediate representation","Register allocation","Instruction selection","Peephole optimization","JIT compilation"]}]},
+  {badge:"10",name:"Software engineering",sub:"Real-world large system building — ship quality code",
+   topics:[{name:"Design patterns",subtopics:["Creational (Singleton, Factory, Builder)","Structural (Adapter, Decorator, Proxy)","Behavioral (Observer, Strategy, Command)","Architectural patterns"]},{name:"SOLID principles",subtopics:["Single Responsibility","Open/Closed","Liskov Substitution","Interface Segregation","Dependency Inversion"]},{name:"Testing",subtopics:["Unit testing","Integration testing","End-to-end testing","Regression testing","Property-based testing","Mutation testing"]},{name:"Git workflows",subtopics:["Feature branching","Trunk-based development","GitFlow","Pull request workflow","Rebasing vs merging"]},{name:"API design",subtopics:["RESTful principles","Resource naming","HTTP status codes","Versioning strategies","Pagination","Error handling"]},{name:"Microservices",subtopics:["Service decomposition","API gateway","Service mesh","Circuit breakers","Event-driven architecture"]}]},
+  {badge:"10.5",name:"Web development",sub:"Internet applications — browser to server",isNew:true,
+   topics:[{name:"HTML & CSS",subtopics:["Semantic HTML","CSS box model","Flexbox layout","Grid layout","CSS animations","Media queries"]},{name:"JavaScript",subtopics:["ES6+ features","Promises & async/await","Modules (ESM)","DOM manipulation","Event handling"]},{name:"Frontend frameworks",subtopics:["React fundamentals","Virtual DOM","State management","Component lifecycle","Hooks API"]},{name:"State management",subtopics:["Redux pattern","Context API","MobX","State machines","Unidirectional data flow"]},{name:"Backend development",subtopics:["REST API","GraphQL","Authentication (JWT, OAuth)","Session management","Rate limiting"]},{name:"Web security",subtopics:["XSS prevention","CSRF tokens","SQL injection prevention","CORS configuration","Content Security Policy"]}]},
+  {badge:"10.6",name:"Mobile development",sub:" pocket apps — iOS & Android",isNew:true,
+   topics:[{name:"iOS development",subtopics:["Swift fundamentals","UIKit views","SwiftUI","View controllers","Auto Layout"]},{name:"Android development",subtopics:["Kotlin fundamentals","Activity lifecycle","Jetpack Compose","View system","XML layouts"]},{name:"Cross-platform",subtopics:["React Native component model","Flutter widget system","Dart programming","State management","Native modules"]},{name:"Mobile architecture",subtopics:["MVVM pattern","Clean architecture","Repository pattern","Dependency injection","Offline-first design"]}]},
+  {badge:"11",name:"Concurrency & parallelism",sub:"Modern performance systems — do more simultaneously",
+   topics:[{name:"Threads & processes",subtopics:["Thread creation","Process forking","Thread pools","Thread scheduling","Thread-local storage"]},{name:"Synchronization",subtopics:["Mutexes","Read-write locks","Semaphores","Condition variables","Barriers"]},{name:"Async programming",subtopics:["Callbacks","Promises","async/await","Event loop","Non-blocking I/O"]},{name:"Parallelism",subtopics:["Fork-join parallelism","MapReduce","Thread pools","Executor services","Work stealing"]},{name:"GPU computing",subtopics:["CUDA programming model"," kernels","Device memory","Thread hierarchy","Optimization"]}]},
+  {badge:"12",name:"Distributed systems",sub:"Scale beyond one machine — fault-tolerant services",
+   topics:[{name:"Consistency models",subtopics:["Strict consistency","Sequential consistency","Causal consistency","Eventual consistency","CAP theorem"]},{name:"Replication",subtopics:["Primary-backup","Multi-primary","Synchronous vs asynchronous","Conflict resolution","Vector clocks"]},{name:"Consensus",subtopics:["Paxos algorithm","Raft algorithm","Leader election","Membership changes","Log replication"]},{name:"Load balancing",subtopics:["Round robin","Least connections","IP hashing","Least response time","Weighted algorithms"]},{name:"Microservices",subtopics:["Service discovery","API gateway","Circuit breaker","Bulkhead","Service mesh"]}]},
+  {badge:"12.5",name:"DevOps & cloud platforms",sub:"Ship fast & scale globally",isNew:true,
+   topics:[{name:"Containers",subtopics:["Docker fundamentals","Dockerfile","Docker networking","Volumes","Multi-stage builds"]},{name:"Kubernetes",subtopics:["Pod design","Deployment strategies","Services & ingress","ConfigMaps & secrets","Helm charts"]},{name:"CI/CD",subtopics:["Pipeline design","Build stages","Test automation","Deployment strategies","Rollback strategies"]},{name:"Cloud services",subtopics:["AWS EC2 & Lambda","GCP Cloud Functions","Azure Functions","Serverless architecture","Cloud storage"]},{name:"Observability",subtopics:["Metrics (Prometheus)","Logging (ELK/Loki)","Tracing (Jaeger)","Dashboards (Grafana)","Alerting"]}]},
+  {badge:"13",name:"Security",sub:"System protection & adversarial thinking — defense in depth",
+   topics:[{name:"Cryptography",subtopics:["Symmetric encryption (AES)","Asymmetric encryption (RSA, ECC)","Hashing (SHA family)","Digital signatures","Key exchange (DH)"]},{name:"Authentication",subtopics:["Password-based auth","Multi-factor authentication","Biometric authentication","OAuth 2.0","OpenID Connect"]},{name:"Authorization",subtopics:["RBAC (Role-Based Access Control)","ABAC (Attribute-Based)","Permission model","Privilege separation","Capability-based security"]},{name:"Web security",subtopics:["OWASP Top 10","SQL injection","XSS attacks","CSRF attacks","Session hijacking"]},{name:"Network security",subtopics:["Firewalls","VPNs","IDS/IPS","DDoS mitigation","Network segmentation"]}]},
+  {badge:"14",name:"Human–computer interaction",sub:"Design for people — user-centered computing",
+   topics:[{name:"UX principles",subtopics:["Visibility of system status","User control","Error prevention","Recovery assistance","Consistency"]},{name:"Accessibility",subtopics:["WCAG guidelines","Screen reader testing","Keyboard navigation","Color contrast","ARIA roles"]},{name:"Design methods",subtopics:["User research","Personas","Journey mapping","Wireframing","Prototyping"]},{name:"Testing",subtopics:["Usability testing","A/B testing","Think-aloud protocol","Eye tracking","Analytics"]}]},
+  {badge:"15",name:"AI & machine learning",sub:"Computational intelligence — make computers learn",
+   topics:[{name:"Supervised learning",subtopics:["Linear regression","Logistic regression","Decision trees","Random forests","Gradient boosting","Support Vector Machines"]},{name:"Unsupervised learning",subtopics:["K-means clustering","Hierarchical clustering","DBSCAN","PCA","t-SNE"]},{name:"Neural networks",subtopics:["Perceptron","Multi-layer networks","Activation functions","Backpropagation","Loss functions"]},{name:"Deep learning",subtopics:["Convolutional neural networks","Recurrent networks","LSTM/GRU","Attention mechanism","Transformers"]},{name:"Optimization",subtopics:["Gradient descent","Stochastic gradient descent","Adam optimizer","Learning rate scheduling","Early stopping"]},{name:"Evaluation",subtopics:["Precision & recall","F1 score","ROC curves","Cross-validation","Confusion matrix"]}]},
+  {badge:"15.5",name:"Computer vision",sub:" — perceptual computing",isNew:true,
+   topics:[{name:"Image representation",subtopics:["Pixel arrays","Color spaces (RGB, HSV, LAB)","Image gradients","Histogram representation"]},{name:"Feature detection",subtopics:["Harris corner detection","SIFT features","ORB features","HOG features","Deep learned features"]},{name:"Object detection",subtopics:["R-CNN family","YOLO","SSD","Anchor boxes","Non-maximum suppression"]},{name:"Semantic segmentation",subtopics:["Fully convolutional networks","U-Net","Mask R-CNN","Instance segmentation","Panoptic segmentation"]},{name:"Face recognition",subtopics:["Face detection","Face alignment","Feature extraction","Embedding-based recognition","Face verification"]}]},
+  {badge:"15.6",name:"Natural language processing",sub:" text & language",isNew:true,
+   topics:[{name:"Text representation",subtopics:["One-hot encoding","Word embeddings","Word2Vec","GloVe","BERT embeddings"]},{name:"Sequence models",subtopics:["RNN","LSTM","GRU","Bidirectional models","Encoder-decoder"]},{name:"Attention",subtopics:["Self-attention","Multi-head attention","Cross-attention","Attention visualization","Interpretation"]},{name:"NLP tasks",subtopics:["Named entity recognition","Part-of-speech tagging","Sentiment analysis","Machine translation","Question answering"]}]},
+  {badge:"16",name:"Theory of computation",sub:"Limits of computing — what computers cannot do",
+   topics:[{name:"Automata theory",subtopics:["DFA (Deterministic Finite Automaton)","NFA (Nondeterministic FA)","Regular expressions","Minimization of DFA","Pumping lemma"]},{name:"Context-free languages",subtopics:["Context-free grammars","Pushdown automata","Chomsky normal form","Parsing algorithms","Pumping lemma for CFL"]},{name:"Turing machines",subtopics:["Deterministic TM","Nondeterministic TM","Universal Turing machine","Church-Turing thesis"]},{name:"Complexity theory",subtopics:["P vs NP","NP-complete problems","NP-hard problems","Reducibility","Cook-Levin theorem"]}]},
+  {badge:"16.5",name:"Formal methods",sub:" provably correct software — mathematics of verification",isNew:true,
+   topics:[{name:"Program verification",subtopics:["Preconditions & postconditions","Loop invariants","Hoare logic","Weakest precondition","Program proofs"]},{name:"Model checking",subtopics:["State space exploration","Temporal logic (LTL, CTL)","Bounded model checking","Counterexamples","Bug finding"]},{name:"Theorem proving",subtopics:["Inductive proofs","Coq proof assistant","Isabelle/HOL","Automated theorem proving","Proof strategies"]},{name:"Program analysis",subtopics:["Static analysis","Dynamic analysis","Abstract interpretation","Data flow analysis","Control flow analysis"]}]},
+  {badge:"17",name:"Computer graphics",sub:"Visual computing — render reality",
+   topics:[{name:"Transformations",subtopics:["Translation","Rotation","Scaling","Shearing","Homogeneous coordinates","Matrix concatenation"]},{name:"Rendering pipeline",subtopics:["Vertex processing","Primitive assembly","Rasterization","Fragment processing","Display output"]},{name:"Shading",subtopics:["Flat shading","Gouraud shading","Phong shading","Blinn-Phong","Physically based shading"]},{name:"Ray tracing",subtopics:["Ray generation","Intersection tests","Reflection","Refraction","Shadow rays","Global illumination"]},{name:"Textures",subtopics:["Texture mapping","Mipmapping","Bump mapping","Normal mapping","Displacement mapping"]}]},
+  {badge:"17.5",name:"Audio & signal processing",sub:"Sound & signals — digital audio engineering",isNew:true,
+   topics:[{name:"Signal fundamentals",subtopics:["Analog vs digital signals","Sampling theorem","Quantization","Aliasing","Signal reconstruction"]},{name:"Fourier analysis",subtopics:["Discrete Fourier Transform","Fast Fourier Transform","Short-time FT","Spectral analysis","Windowing"]},{name:"Filters",subtopics:["IIR filters","FIR filters","Filter design","Equalization","Audio effects"]},{name:"Speech processing",subtopics:["MFCC features","Formant analysis","Pitch detection","Speech recognition","Text-to-speech"]}]},
+  {badge:"18",name:"Blockchain & decentralized systems",sub:" trustless consensus — beyond centralized authority",isNew:true,
+   topics:[{name:"Cryptography",subtopics:["Hash functions","Digital signatures","Merkle trees","Public key cryptography","Zero-knowledge proofs"]},{name:"Consensus",subtopics:["Proof of Work","Proof of Stake","Byzantine Fault Tolerance","Practical BFT","Proof of History"]},{name:"Blockchain architecture",subtopics:["Block structure","Transaction model","State representation","Merkle tree","Fork handling"]},{name:"Smart contracts",subtopics:["Solidity","EVM (Ethereum Virtual Machine)","Gas optimisation","Token standards (ERC-20, ERC-721)","DeFi protocols"]}]},
+{badge:"19",name:"Robotics & autonomous systems",sub:" agents — perceiving & acting",isNew:true,
+   topics:[{name:"Kinematics",subtopics:["Forward kinematics","Inverse kinematics","DH parameters","Jacobian matrix","Workspace analysis"]},{name:"Perception",subtopics:["LIDAR processing","Camera calibration","Depth sensing","Object detection","Localization"]},{name:"SLAM",subtopics:["EKF SLAM","Particle filter SLAM","Graph SLAM","Loop closure","Pose graph optimization"]},{name:"Control",subtopics:["PID control","Computed torque control","Adaptive control","Robust control"]},{name:"Motion planning",subtopics:["Path planning","RRT","PRM","A* in continuous space","Trajectory optimization"]}]},
+];
+
+const math = [
+  {badge:"M0",name:"Linear algebra",sub:"Vectors, matrices & linear transformations",
+   topics:[{name:"Vectors",subtopics:["Vector operations","Linear combinations","Span & subspace","Linear independence","Basis & dimension"]},{name:"Matrices",subtopics:["Matrix multiplication","Identity & inverse","Transpose & determinant","Rank & nullity","Gaussian elimination"]},{name:"Linear transformations",subtopics:["Linear maps","Kernel & image","Change of basis","Eigenvalues & eigenvectors","Diagonalization"]},{name:"Applications",subtopics:["Graphics transformations","Least squares","PCA","SVD"]}]},
+  {badge:"M1",name:"Calculus",sub:"Rates of change & accumulation",
+   topics:[{name:"Limits & continuity",subtopics:["Limit definitions","Continuity","Derivative definition","Intermediate value theorem"]},{name:"Differentiation",subtopics:["Power rule","Chain rule","Product rule","Implicit differentiation","Related rates"]},{name:"Integration",subtopics:["Antiderivatives","Fundamental theorem","Integration techniques","Improper integrals","Area & volume"]},{name:"Multivariable calculus",subtopics:["Partial derivatives","Gradient & directional derivative","Lagrange multipliers","Multiple integrals","Green's theorem"]}]},
+  {badge:"M2",name:"Probability & statistics",sub:"Modeling uncertainty & inference",
+   topics:[{name:"Probability fundamentals",subtopics:["Sample spaces & events","Conditional probability","Bayes' theorem","Independence","Random variables"]},{name:"Distributions",subtopics:["Binomial, Poisson, Normal","Expected value & variance","Law of large numbers","Central limit theorem","Joint distributions"]},{name:"Inference",subtopics:["Point estimation","Confidence intervals","Hypothesis testing","p-values","Chi-square tests"]},{name:"Regression",subtopics:["Linear regression","Multiple regression","Logistic regression","Model selection","Residual analysis"]}]},
+  {badge:"M3",name:"Discrete mathematics",sub:"Structures for computer science",
+   topics:[{name:"Logic",subtopics:["Propositional logic","Logical equivalences","Proof techniques","Truth tables","Logic in programming"]},{name:"Set theory",subtopics:["Set operations","Relations","Functions","Cardinality","Infinite sets"]},{name:"Combinatorics",subtopics:["Permutations & combinations","Binomial theorem","Pigeonhole principle"," Inclusion-exclusion","Generating functions"]},{name:"Graph theory",subtopics:["Graph definitions","Paths & cycles","Trees","Planarity","Graph algorithms"]}]},
+  {badge:"M4",name:"Number theory",sub:"Integers & their properties",
+   topics:[{name:"Divisibility",subtopics:["Division algorithm","Prime factorization","GCD & LCM","Euclidean algorithm","Modular arithmetic"]},{name:"Congruences",subtopics:["Chinese remainder theorem","Fermat's little theorem","Euler's theorem","Primitive roots","Quadratic residues"]},{name:"Cryptography",subtopics:["RSA encryption","Diffie-Hellman","Elliptic curve cryptography","Hash functions","Digital signatures"]}]},
+  {badge:"M5",name:"Graph algorithms",sub:"Networks & relationships",
+   topics:[{name:"Representations",subtopics:["Adjacency matrix & list","Incidence matrix","Weighted graphs","Directed graphs","Multigraphs"]},{name:"Traversal",subtopics:["BFS & DFS","Topological sort","Connected components","articulation points"]},{name:"Shortest path",subtopics:["Dijkstra's algorithm","Bellman-Ford","A* search","Floyd-Warshall"," Johnson's algorithm"]},{name:"Matching",subtopics:["Bipartite matching","Hall's marriage theorem","Hungarian algorithm","Network flow"]}]},
+  {badge:"M6",name:"Information theory",sub:"Quantifying information",
+   topics:[{name:"Entropy",subtopics:["Shannon entropy","Joint entropy","Conditional entropy","Information gain"]},{name:"Coding",subtopics:[" Huffman coding","Shannon-Fano","Arithmetic coding","LZ77/LZ78","Run-length encoding"]},{name:"Channels",subtopics:["Channel capacity","Channel coding theorem","Error correction","Hamming codes"," Reed-Solomon"]}]},
+  {badge:"M7",name:"Calculus of variations",sub:"Optimization of functionals",
+   topics:[{name:"Functionals",subtopics:["What is a functional","Euler-Lagrange equation","Boundary conditions","Multiple variables"]},{name:"Applications",subtopics:["Brachistochrone problem","Geodesics","Minimal surfaces","Principle of least action"]}]},
+  {badge:"M8",name:"Differential equations",sub:"Modeling dynamic systems",
+   topics:[{name:"First order ODEs",subtopics:["Separable equations","Linear first order","Exact equations","Integrating factor","Direction fields"]},{name:"Higher order",subtopics:["Linear ODEs","Constant coefficients","Variation of parameters","Cauchy-Euler equations","Systems of ODEs"]},{name:"Series solutions",subtopics:["Power series","Frobenius method","Bessel functions","Legendre polynomials"]},{name:"Numerical methods",subtopics:["Euler's method","Runge-Kutta","Multistep methods","Stability","Boundary value problems"]}]},
+  {badge:"M9",name:"Numerical analysis",sub:"Computational approximation",
+   topics:[{name:"Error analysis",subtopics:["Floating point","Roundoff error","Truncation error","Condition number","Stability"]},{name:"Linear algebra",subtopics:["LU decomposition","Cholesky","QR decomposition","SVD","Iterative methods"]},{name:"Nonlinear equations",subtopics:["Bisection, Newton, Secant","Fixed point iteration","Convergence analysis","Multidimensional"]},{name:"Integration",subtopics:["Newton-Cotes","Gaussian quadrature","Romberg integration","Adaptive quadrature","Monte Carlo integration"]}]},
+  {badge:"M10",name:"Optimization",sub:"Finding best solutions",
+   topics:[{name:"Unconstrained optimization",subtopics:["Gradient descent","Newton's method","Conjugate gradient","Quasi-Newton methods","Line search"]},{name:"Constrained optimization",subtopics:["Lagrange multipliers","KKT conditions","Penalty methods","Barrier methods","Interior point"]},{name:"Linear programming",subtopics:["Simplex algorithm","Duality","Sensitivity analysis","Integer programming"]},{name:"Convex optimization",subtopics:["Convex sets & functions","LP, QP, SOCP","CVX","Applications"]}]},
+  {badge:"M11",name:"Game theory",sub:"Strategic interactions",
+   topics:[{name:"Basic concepts",subtopics:["Players, strategies, payoffs","Normal form games","Dominant strategies","Nash equilibrium"]},{name:"Solutions concepts",subtopics:["Mixed strategies","Pareto optimal","Subgame perfect equilibrium","Bayesian games"]},{name:"Applications",subtopics:["Auctions","Mechanism design","Voting systems","Bargaining","Repeated games"]}]},
+  {badge:"M12",name:"Math for ML",sub:"Mathematics of machine learning",
+   topics:[{name:"Linear models",subtopics:["Linear regression","Logistic regression","Perceptron","SVM kernel trick"]},{name:"Neural networks",subtopics:["Backpropagation","Gradient descent","Activation functions","Loss functions"]},{name:"Probabilistic models",subtopics:["Maximum likelihood","Bayesian inference","EM algorithm","Variational inference"]},{name:"Theory",subtopics:["VC dimension","Bias-variance tradeoff","Overfitting","Regularization"]}]},
+];
+
+const db = [
+  {badge:"DB00",name:"SQL fundamentals",sub:"Query language for relational data",
+   topics:[{name:"SELECT basics",subtopics:["SELECT and FROM","Column selection","DISTINCT","Column aliases","NULL handling"]},{name:"Filtering",subtopics:["WHERE clause","AND, OR, NOT","BETWEEN","IN operator","LIKE pattern matching"]},{name:"Sorting",subtopics:["ORDER BY (ASC/DESC)","Multiple columns","NULLS FIRST/LAST","CASE in ORDER BY"]},{name:"Limit",subtopics:["LIMIT","OFFSET","FETCH FIRST","Top N queries"]}]},
+  {badge:"DB01",name:"SQL joins",sub:"Combining tables",
+   topics:[{name:"INNER JOIN",subtopics:["Join syntax","Multiple joins","Self-joins","Non-equi joins","Join vs subquery"]},{name:"OUTER JOINs",subtopics:["LEFT OUTER JOIN","RIGHT OUTER JOIN","FULL OUTER JOIN","LEFT ONLY vs INNER"]},{name:"Advanced",subtopics:["CROSS JOIN","NATURAL JOIN","USING clause","ON vs WHERE","Join optimization"]}]},
+  {badge:"DB02",name:"SQL aggregations",sub:"Grouping and aggregating",
+   topics:[{name:"GROUP BY",subtopics:["Grouping single column","Multiple columns","GROUP BY with HAVING","Aggregates (COUNT, SUM, AVG, MIN, MAX)","NULL in aggregates"]},{name:"Aggregations",subtopics:["COUNT(*) vs COUNT(col)","SUM/AVG with DISTINCT","Window functions basics","FIRST_VALUE/LAST_VALUE","LEAD/LAG"]},{name:"Advanced GROUP",subtopics:["ROLLUP","CUBE","GROUPING SETS","HAVING vs WHERE","Conditional aggregates"]}]},
+  {badge:"DB03",name:"SQL subqueries",sub:"Queries within queries",
+   topics:[{name:"Subquery types",subtopics:["Scalar subquery","Table subquery","Correlated subquery","EXISTS/NOT EXISTS","Subquery in FROM"]},{name:"Operations",subtopics:["IN with subquery","ANY/ALL","SET operators (UNION, INTERSECT, EXCEPT)","Subquery vs JOIN","Common Table Expressions (CTE)"]},{name:"CTEs",subtopics:["WITH clause","Recursive CTE","CTE vs derived table","Multiple CTEs","CTE performance"]}]},
+  {badge:"DB04",name:"Data modification",sub:"INSERT, UPDATE, DELETE",
+   topics:[{name:"INSERT",subtopics:["INSERT INTO VALUES","INSERT INTO SELECT","Bulk insert","INSERT ON CONFLICT","DEFAULT values"]},{name:"UPDATE",subtopics:["UPDATE with WHERE","UPDATE from JOIN","CASE in UPDATE","LIMIT in UPDATE","UPDATE with RETURNING"]},{name:"DELETE",subtopics:["DELETE with WHERE","TRUNCATE vs DELETE","DELETE from JOIN","CASCADE deletes","Soft delete pattern"]}]},
+  {badge:"DB05",name:"SQL schemas & tables",sub:"Database objects",
+   topics:[{name:"CREATE TABLE",subtopics:["Column definitions","Data types","Constraints (NOT NULL, UNIQUE)","DEFAULT values","CHECK constraints"]},{name:"Constraints",subtopics:["PRIMARY KEY","FOREIGN KEY","Composite keys","Referential integrity","CONSTRAINT naming"]},{name:"ALTER TABLE",subtopics:["ADD/DROP COLUMN","MODIFY column","ADD/DROP constraint","RENAME table","ALTER with data"]}]},
+  {badge:"DB06",name:"Indexes",sub:"Performance optimization",
+   topics:[{name:"Index types",subtopics:["B-tree indexes","Hash indexes","Gin indexes (PostgreSQL)","Composite indexes","Unique indexes"]},{name:"Index usage",subtopics:["Index on columns","Covering indexes","Partial indexes","Index selectivity","Index only scan"]},{name:"Optimization",subtopics:["EXPLAIN ANALYZE","Index hints","Remove unused indexes","Index maintenance","Clustering"]}]},
+  {badge:"DB07",name:"Database design",sub:"Schema design principles",
+   topics:[{name:"Normalization",subtopics:["1NF (atomic values)","2NF (no partial dependency)","3NF (transitive dependency)","BCNF (Boyce-Codd)","Higher normal forms"]},{name:"Denormalization",subtopics:["When to denormalize","Materialized views","冗余数据","Audit fields","Performance vs integrity"]},{name:"Relationships",subtopics:["One-to-one","One-to-many","Many-to-many","Recursive relationships","Weak entities"]}]},
+  {badge:"DB08",name:"Data integrity",sub:"Constraints and rules",
+   topics:[{name:"Key constraints",subtopics:["PRIMARY KEY rules","Composite keys","Natural vs surrogate keys","FOREIGN KEY actions (CASCADE, SET NULL)","ON DELETE vs ON UPDATE"]},{name:"Domain integrity",subtopics:["CHECK constraints","UNIQUE constraints","NOT NULL","Domain types","Rule objects"]},{name:"Business rules",subtopics:["Trigger basics","CONSTRAINT vs TRIGGER","Trigger timing (BEFORE/AFTER/INSTEAD OF)","Trigger events (INSERT/UPDATE/DELETE)","Trigger recursion"]}]},
+  {badge:"DB09",name:"Transactions",sub:"ACID properties",
+   topics:[{name:"Transaction control",subtopics:["BEGIN, COMMIT, ROLLBACK","SAVEPOINT","Auto-commit mode","Transaction isolation levels","SET TRANSACTION"]},{name:"Isolation levels",subtopics:["READ UNCOMMITTED","READ COMMITTED","REPEATABLE READ","SERIALIZABLE","Snapshot isolation"]},{name:"Concurrency",subtopics:["Lock types (ROW, TABLE)","Lock modes (SHARE, EXCLUSIVE)","Deadlock detection","Lock timeout","Optimistic locking"]}]},
+  {badge:"DB10",name:"Views",sub:"Virtual tables",
+   topics:[{name:"View basics",subtopics:["CREATE VIEW","Updatable views","READ ONLY views","View with CHECK OPTION","Recursive views"]},{name:"Advanced views",subtopics:["Materialized views","Refresh options","Materialized view vs view","Incremental refresh","Storage parameters"]}]},
+  {badge:"DB11",name:"Stored procedures",sub:"Server-side logic",
+   topics:[{name:"Procedures",subtopics:["CREATE PROCEDURE","Parameters (IN, OUT, INOUT)","Local variables","Control flow (IF, CASE, LOOP)","RETURN"]},{name:"Functions",subtopics:["CREATE FUNCTION","Return types","RETURNS TABLE","Deterministic functions","Function overloading"]},{name:"Advanced",subtopics:["Stored procedure performance","Transaction control in SP","Error handling","Dynamic SQL","Stored function vs view"]}]},
+  {badge:"DB12",name:"Triggers",sub:"Automatic actions",
+   topics:[{name:"Trigger basics",subtopics:["CREATE TRIGGER","BEFORE vs AFTER","FOR EACH ROW","OLD and NEW values","Trigger conditions"]},{name:"Types",subtopics:["DML triggers (INSERT/UPDATE/DELETE)","DDL triggers","INSTEAD OF triggers","Event triggers","Schema triggers"]},{name:"Patterns",subtopics:["Audit trail","Soft delete","Automatic timestamps","Data validation","Cascading updates"]}]},
+  {badge:"DB13",name:"PostgreSQL",sub:"Advanced open-source RDBMS",
+   topics:[{name:"PostgreSQL basics",subtopics:["psql","pgAdmin","Database/Schema/Search path","Connection strings","pg_hba.conf"]},{name:"Advanced types",subtopics:["JSON/JSONB","UUID","Array type","Range types","Custom types"]},{name:"Advanced features",subtopics:["CTEs (WITH)","Window functions","Recursive queries","LATERAL join","FILESTORE"]},{name:"Performance",subtopics:["EXPLAIN","EXPLAIN ANALYZE","pg_stat_statements","pg_stat_user_tables","Query tuning"]}]},
+  {badge:"DB14",name:"MySQL",sub:"Popular open-source RDBMS",
+   topics:[{name:"MySQL basics",subtopics:["mysql CLI","MySQL Workbench","Storage engines (InnoDB, MyISAM)","Character sets","Time zones"]},{name:"InnoDB",subtopics:["Row format","Locking","Transaction isolation","Crash recovery","ACID compliance"]},{name:"Advanced",subtopics:["Partitioning","Replication","Clustering (InnoDB Cluster)","JSON functions","Full-text search"]}]},
+  {badge:"DB15",name:"Database administration",sub:"DBA responsibilities",
+   topics:[{name:"User management",subtopics:["CREATE USER","GRANT/REVOKE","Roles","Privileges","Password policies"]},{name:"Backup & restore",subtopics:["Logical backup (mysqldump/pg_dump)","Physical backup","Point-in-time recovery","Incremental backup","Backup verification"]},{name:"Monitoring",subtopics:["Slow query log","Performance schema","sys schema","Metric collection","Alerting"]}]},
+  {badge:"DB16",name:"Database replication",sub:"Data distribution",
+   topics:[{name:"Replication types",subtopics:["Master-slave","Master-master","Synchronous","Asynchronous","Semi-synchronous"]},{name:"PostgreSQL replication",subtopics:["Streaming replication","Logical replication","Physical replication","Replication slots","Cascading replication"]},{name:"MySQL replication",subtopics:["Binary logs","Binlog format","GTID replication","Replication lag","Failover"]},{name:"HA solutions",subtopics:["Patroni","ProxySQL","PgBouncer","Connection pooling","Load balancing"]}]},
+  {badge:"DB17",name:"Database sharding",sub:"Horizontal scaling",
+   topics:[{name:"Sharding concepts",subtopics:["Shard key selection","Range-based sharding","Hash-based sharding","Directory-based sharding","Sharding patterns"]},{name:"PostgreSQL sharding",subtopics:["Citus extension","Coordinator and worker","Reference tables","Colocate tables","Distributed queries"]},{name:"Application layer",subtopics:["Shard-aware queries","Cross-shard transactions","Routing","Fan-out queries","Result aggregation"]}]},
+  {badge:"DB18",name:"NoSQL databases",sub:"Non-relational data stores",
+   topics:[{name:"Key-value",subtopics:["Redis basics","Data structures (string, hash, list, set, sorted set)","Expiration patterns","Pub/Sub","Lua scripting"]},{name:"Document",subtopics:["MongoDB basics","BSON documents","Collections","Aggregation pipeline","Schema validation"]},{name:"Wide-column",subtopics:["Cassandra basics","CQL","Partitioning","Compaction","Time-to-live"]}]},
+  {badge:"DB19",name:"Database security",sub:"Protecting data",
+   topics:[{name:"Authentication",subtopics:["User authentication","Password policies","MFA","Certificate auth","LDAP integration"]},{name:"Authorization",subtopics:["Role-based access","Object-level security","Row-level security","Column-level security","Data masking"]},{name:"Encryption",subtopics:["At-rest encryption","TLS/SSL","Client encryption","Key management","Encrypted backups"]},{name:"Compliance",subtopics:["GDPR","HIPAA","PCI-DSS","Audit logging","Data retention"]}]},
+  {badge:"DB20",name:"Query optimization",sub:"Performance tuning",
+   topics:[{name:"Query analysis",subtopics:["EXPLAIN output","Query cost","Execution plans","Predicate selectivity","Index usage"]},{name:"Optimization techniques",subtopics:["Rewriting queries","Denormalization","Materialized views","Query caching","Bulk operations"]},{name:"Performance patterns",subtopics:["Pagination optimization","Bulk inserts","Batch updates","Stored procedures","Prepared statements"]}]},
+  {badge:"DB21",name:"Time-series & analytics",sub:"Specialized workloads",
+   topics:[{name:"Time-series data",subtopics:["TimescaleDB","Partitioning by time","Compression","Retention policies","Continuous aggregates"]},{name:"Analytics",subtopics:["OLAP basics","Columnar stores","Materialized aggregations","Data warehousing","ETL vs ELT"]},{name:"Data lake",subtopics:["Data lake concepts","Parquet/ORC","Delta Lake","Iceberg","Lakehouse architecture"]}]},
+  {badge:"DB22",name:"Database internals",sub:"How databases work",
+   topics:[{name:"Storage",subtopics:["Pages and extents","Row storage","Page format","Index storage","Tablespaces"]},{name:"Memory",subtopics:["Buffer pool","Cache management","Dirty pages","Checkpoint","Recovery"]},{name:"Query processing",subtopics:["Parser","Optimizer","Planner","Executor","Cost estimation"]}]},
+  {badge:"DB23",name:"Full-text search",sub:"Search capabilities",
+   topics:[{name:"PostgreSQL FTS",subtopics:["tsvector","tsquery","Ranking","Highlight","Synonyms"]},{name:"Elasticsearch",subtopics: ["Index documents","Mapping","Query DSL","Aggregations","Ingestion pipeline"]},{name:"Patterns",subtopics: ["Search architecture","Indexing strategy","Relevance tuning","Autocomplete","Suggesters"]}]},
+  {badge:"DB24",name:"Graph databases",sub:"Related data",
+   topics:[{name:"Cypher basics",subtopics:["CREATE","MATCH","Relationships","Properties","Pattern matching"]},{name:"Neo4j",subtopics:["Nodes and relationships","Labels","Property graphs","Cypher queries","ACID compliance"]},{name:"Use cases",subtopics:["Social networks","Recommendation","Fraud detection","Network analysis","Knowledge graphs"]}]},
+];
+
+const web = [
+  {badge:"W00",name:"Browser DevTools",sub:"Debugging and profiling",
+   topics:[{name:"Elements panel",subtopics:["DOM inspection","CSS debugging","Computed styles","Event listeners","Live editing"]},{name:"Network panel",subtopics:["Request/response","Headers and payloads","Timing analysis","HAR files","Throttling"]},{name:"Console",subtopics:["Console API","Grouping and formatting","monitorEvents","copy() and store()","Command editing"]},{name:"Performance",subtopics:["Flame chart","Frame rates","Long tasks","Network waterfall","Film strip"]}]},
+  {badge:"W01",name:"Web performance",sub:"Core Web Vitals and optimization",
+   topics:[{name:"Core Web Vitals",subtopics:["LCP (Largest Contentful Paint)","FID (First Input Delay)","CLS (Cumulative Layout Shift)","INP (Interaction to Next Paint)","Target thresholds"]},{name:"Loading performance",subtopics:["Critical rendering path","Resource hints (preload, prefetch)","Lazy loading","Bundle splitting","Compression (gzip, brotli)"]},{name:"Rendering performance",subtopics:["Paint profiling","Layout thrashing","Composite layers","will-change","RAF (requestAnimationFrame)"]},{name:"Tools",subtopics:["Lighthouse","WebPageTest","Chrome DevTools Performance","Profile comparison","Budgets"]}]},
+  {badge:"W02",name:"Linux fundamentals",sub:"Server operating system",
+   topics:[{name:"Shell basics",subtopics:["Bash/zsh","File system (ls, cp, mv, rm)","Permissions (chmod, chown)","Pipes and redirects","grep, awk, sed"]},{name:"Process management",subtopics:["ps, top, htop","kill and signals","Background jobs (&, nohup)","systemd","cron and crontab"]},{name:"Networking",subtopics:["ip, ifconfig, netstat","curl and wget","ssh and scp","ssh keys"," rsync"]},{name:"Text editors",subtopics:["Vim basics","Nano","tmux sessions","Screen multiplexing"]}]},
+  {badge:"W03",name:"Docker",sub:"Containerization",
+   topics:[{name:"Docker fundamentals",subtopics:["Images and containers","Dockerfile syntax","Build layers","Multi-stage builds",".dockerignore"]},{name:"Docker Compose",subtopics:["docker-compose.yml","Services","Networks","Volumes","Depends on"]},{name:"Networking",subtopics:["Bridge, host, overlay","Port mapping","DNS resolution","Links (deprecated)"]},{name:"Storage",subtopics:["Volumes","Bind mounts","tmpfs","Named volumes","Volume drivers"]}]},
+  {badge:"W04",name:"Kubernetes",sub:"Container orchestration",
+   topics:[{name:"K8s fundamentals",subtopics:["Pods, Deployments, Services","ReplicaSets","Namespaces","Context","kubectl basics"]},{name:"Workloads",subtopics:["Deployments","StatefulSets","DaemonSets","Jobs and CronJobs","Horizontal Pod Autoscaling"]},{name:"Networking",subtopics:["ClusterIP, NodePort, LoadBalancer","Ingress","NetworkPolicies","DNS","Service mesh basics"]},{name:"Configuration",subtopics:["ConfigMaps","Secrets","Environment variables","Volume mounts","Config from ConfigMap"]}]},
+  {badge:"W05",name:"Kubernetes advanced",sub:"Production K8s",
+   topics:[{name:"Storage",subtopics:["PersistentVolumes","PersistentVolumeClaims","StorageClasses","Dynamic provisioning","CSI drivers"]},{name:"Security",subtopics:["RBAC","ServiceAccounts","Network policies","Pod Security Policies","Secrets management"]},{name:"Helm",subtopics:["Charts","Templates","Values","Repositories","Release management"]},{name:"Operations",subtopics:["Rolling updates","Rollbacks","Health checks","Affinity/anti-affinity","Taints and tolerations"]}]},
+  {badge:"W06",name:"Terraform",sub:"Infrastructure as Code",
+   topics:[{name:"Terraform basics",subtopics:["Providers","Resources","Data sources","Variables","Output"]},{name:"State management",subtopics:["Remote state","State locking","Workspaces","Backend config","Import existing resources"]},{name:"Modules",subtopics:["Module structure","Local and registry modules","Variables and outputs","Versioning"]},{name:"Best practices",subtopics:["Code organization",".gitignore","State commands","fmt and validate"]}]},
+  {badge:"W07",name:"CI/CD",sub:"Continuous integration and deployment",
+   topics:[{name:"GitHub Actions",subtopics:["Workflow syntax","Jobs and steps","Matrix builds","Caching","Artifacts"]},{name:"Pipelines",subtopics:["Lint and type check","Unit tests","Integration tests","Build and push","Deploy"]},{name:"GitLab CI",subtopics:[".gitlab-ci.yml","Pipelines","Runner","Artifacts","DAG pipelines"]},{name:"Jenkins",subtopics:["Jenkinsfile","Pipeline syntax","Agents and nodes","Plugins","Shared libraries"]}]},
+  {badge:"W08",name:"GitOps",sub:"Git-based deployment",
+   topics:[{name:"ArgoCD",subtopics:["Application CRD","Sync and drift","Rollouts","RBAC","Notifications"]},{name:"Flux",subtopics:["GitRepository","Kustomization","HelmRelease","Image automation","Notifications"]},{name:"Patterns",subtopics:["App of apps","Pull vs push","Environment promotion","Rollback via git","Drift detection"]}]},
+  {badge:"W09",name:"AWS fundamentals",sub:"Amazon Web Services",
+   topics:[{name:"Compute",subtopics:["EC2 instances","Lambda functions","ECS (Fargate/E C2)","EKS"]},{name:"Storage",subtopics:["S3","EBS","EFS","Storage classes"]},{name:"Networking",subtopics:["VPC","Subnets","Route 53","CloudFront","Load Balancers"]},{name:"Databases",subtopics:["RDS","DynamoDB","ElastiCache","DocumentDB"]}]},
+  {badge:"W10",name:"Cloud monitoring",sub:"Observability stack",
+   topics:[{name:"Metrics",subtopics:["Prometheus","Grafana","CloudWatch metrics","Custom metrics","Exports"]},{name:"Logging",subtopics:["ELK stack (Elasticsearch, Logstash, Kibana)","Loki","Fluentd","Log aggregation","Querying"]},{name:"Tracing",subtopics:["Jaeger","OpenTelemetry","Distributed traces","Sampling","Trace context"]},{name:"Alerting",subtopics:["Alertmanager","Grafana alerting","Paging","Runbooks","SLOs and SLIs"]}]},
+  {badge:"W11",name:"Kubernetes + DevOps",sub:"K8s in production",
+   topics:[{name:"GitOps with ArgoCD",subtopics:["Application of apps","Sync policies","Image updater","Progressive delivery","Multi-cluster"]},{name:"CI/CD for K8s",subtopics:["Build and push to registry","Helm chart CI","Kustomize overlays","Canary deployments","Blue-green deployments"]},{name:"Monitoring K8s",subtopics:["Prometheus Operator","Kube-state-metrics","Node-exporter","Grafana dashboards","Alerting rules"]},{name:"Logging K8s",subtopics:["Fluent Bit","EFK stack","Pod logs","Cluster logs","Audit logs"]}]},
+  {badge:"W12",name:"Load balancing",sub:"Traffic distribution",
+   topics:[{name:"Nginx",subtopics:["Reverse proxy","Load balancing methods","Upstream","SSL termination","Rate limiting"]},{name:"HAProxy",subtopics:["Configuration","ACLs and rules","Backend pools","Health checks","ACL-based routing"]},{name:"Cloud LB",subtopics:["AWS ALB/NLB","GCP Cloud LB","Azure LB","Health checks","Cross-zone load balancing"]}]},
+  {badge:"W13",name:"Autoscaling",sub:"Dynamic scaling",
+   topics:[{name:"Kubernetes HPA",subtopics:["CPU and memory metrics","Custom metrics","Scaling behavior","Scaling bounds"]},{name:"Cluster autoscaling",subtopics:["Cluster autoscaler","Karpenter","Node pools","Spot instances"]},{name:"Application scaling",subtopics:["Horizontal scaling","Vertical scaling","Queue-based scaling","Predictive scaling"]}]},
+  {badge:"W14",name:"High availability",sub:"Fault tolerance",
+   topics:[{name:"Patterns",subtopics:["Active-passive","Active-active","Multi-region","Failover","Health checks"]},{name:"Database HA",subtopics:["PostgreSQL HA (Patroni)","Replication","Read replicas","Connection pooling","PgBouncer"]},{name:"Redis HA",subtopics:["Redis Sentinel","Redis Cluster","Replication","Automatic failover"]}]},
+  {badge:"W15",name:"Security & DevOps",sub:"DevOps security",
+   topics:[{name:"Secrets management",subtopics:["HashiCorp Vault","AWS Secrets Manager","Kubernetes secrets","External secrets operator"]},{name:"Scanning",subtopics:["Trivy","Snyk","Grype","Container signing","Cosign"]},{name:"Policy",subtopics:["OPA Gatekeeper","Kyverno","Admission controllers","Constraint templates"]}]},
+  {badge:"W16",name:"Database DevOps",sub:"Database in CI/CD",
+   topics:[{name:"Migrations",subtopics:["Liquibase","Flyway","Migration ordering","Rollback strategy","Zero-downtime"]},{name:"Testing DB",subtopics:["Test containers","DB in CI","Schema validation","Load testing","Fixtures"]},{name:"Backup & restore",subtopics:["Automated backups","Point-in-time recovery","Cross-region backup","Restore testing","Backup verification"]}]},
+  {badge:"W17",name:"Incident response",sub:"On-call and incidents",
+   topics:[{name:"On-call",subtopics:["Rotation","Alert routing","Escalation","Handoff","Paging"]},{name:"Incident lifecycle",subtopics:["Detection","Triage","Mitigation","Resolution","Post-mortem"]},{name:"Tools",subtopics:["PagerDuty","Opsgenie","Statuspage","Retrospective","Blameless post-mortem"]}]},
+  {badge:"W18",name:"PWA & Web APIs",sub:"Advanced web",
+   topics:[{name:"PWA",subtopics:["Manifest.json","Service Workers","Workbox","Offline","Push notifications"]},{name:"Web APIs",subtopics:["IndexedDB","Storage APIs","Clipboard","Wake Lock","Navigator APIs"]},{name:"WebAssembly",subtopics:["Module instantiation","Memory","Rust to WASM","SIMD","Threads"]}]},
+  {badge:"W19",name:"WebRTC & GraphQL",sub:"Real-time and query",
+   topics:[{name:"WebRTC",subtopics:["PeerConnection","ICE candidates","Data channels","STUN/TURN","SFU basics"]},{name:"GraphQL client",subtopics:["Apollo Client","InMemoryCache","Optimistic updates","Subscriptions","SSR"]}]},
+  {badge:"W20",name:"Monitoring & Analytics",sub:"Observability and analytics",
+   topics:[{name:"Frontend monitoring",subtopics:["Sentry","Performance monitoring","RUM","User session replay"]},{name:"Web analytics",subtopics:["GA4","Plausible","Fathom","PostHog","Privacy-first"]},{name:"Uptime",subtopics:["Uptime monitoring","Heartbeat checks","SSL monitoring","Status pages"]}]},
+];
+
+const py = [
+  {badge:"PY00",name:"Python fundamentals",sub:"Core language — syntax, types, execution",
+   topics:[{name:"Variables & types",subtopics:["Dynamic typing","Type annotations (3.5+)","Type hints (3.9+)","Mutable vs immutable","None and boolean"]},{name:"Data structures",subtopics:["Lists and list operations","Tuples (immutable)","Dictionaries","Sets","Comprehensions"]},{name:"Control flow",subtopics:["if/elif/else","for/while loops","Match statements (3.10+)","Comprehensions","Early exit (break, continue, return)"]},{name:"Functions",subtopics:["def and lambda","*args and **kwargs","Default parameters","Closures","Decorators"]}]},
+  {badge:"PY01",name:"Python OOP",sub:"Object-oriented programming",
+   topics:[{name:"Classes",subtopics:["class definition","__init__ constructor","Instance attributes","Class attributes","dataclasses (3.7+)"]},{name:"Inheritance",subtopics:["Inheritance syntax","super()","Method overriding","Multiple inheritance","MRO (Method Resolution Order)"]},{name:"Advanced patterns",subtopics:["Abstract base classes (ABC)","Protocol (structural subtyping)","Mixins","__slots__","Descriptors"]},{name:"Magic methods",subtopics:["__str__, __repr__","__eq__, __hash__","__lt__ etc. (rich comparisons)","__enter__, __exit__ (context manager)","__call__"]}]},
+  {badge:"PY02",name:"Modules & packages",sub:"Code organization",
+   topics:[{name:"Imports",subtopics:["import vs from...import","Relative imports","Circular imports","__init__.py","Import hooks"]},{name:"Packages",subtopics:["pyproject.toml","setup.py/setup.cfg","Virtual environments","pip and venv","poetry/pyproject"]},{name:"Standard library",subtopics:["os, sys","pathlib","argparse","json, csv","dataclasses and typing"]}]},
+  {badge:"F00",name:"Flask fundamentals",sub:"Lightweight WSGI web framework",
+   topics:[{name:"App structure",subtopics:["Flask(__name__)","app.route() decorator","Request object","Response object","JSON responses"]},{name:"Routing",subtopics:["URL parameters","Converter types","HTTP methods","Endpoint building","url_for()"]},{name:"Templates",subtopics:["Jinja2 templates","Template inheritance","include, macro","Loop and conditionals","Custom filters"]},{name:"Static files",subtopics:["static folder","url_for('static', ...)","CSS/JS files","Favicon","Cache busting"]}]},
+  {badge:"F01",name:"Flask patterns",sub:"Building web applications",
+   topics:[{name:"Forms & validation",subtopics:["request.form","WTForms integration","Form validation","Error display","CSRF protection"]},{name:"Database integration",subtopics:["SQLAlchemy basics","Flask-SQLAlchemy","Models and relationships","Migrations (Alembic)","Query API"]},{name:"Authentication",subtopics:["Flask-Login","User session","Login manager","@login_required","User loader"]},{name:"Configuration",subtopics:["app.config","Config classes","Environment variables","Secret keys","Production config"]}]},
+  {badge:"F02",name:"Flask APIs",sub:"Building RESTful APIs",
+   topics:[{name:"API design",subtopics:["Resource-based URLs","JSON responses","Status codes","Error responses","Versioning"]},{name:"Request handling",subtopics:["request.get_json()","Query parameters","Request headers","File uploads","Pagination"]},{name:"Response patterns",subtopics:["make_response()","JSONify","Custom MIME types","Streaming","Content negotiation"]},{name:"Error handling",subtopics:["@app.errorhandler()","HTTPException","Abort","Custom errors","JSON error responses"]}]},
+  {badge:"F03",name:"Flask extensions",sub:"Ecosystem and plugins",
+   topics:[{name:"Database",subtopics:["Flask-SQLAlchemy","SQLAlchemy ORM"," Relationships (one-to-many, many-to-many)","Migrations","Connection pooling"]},{name:"Authentication",subtopics:["Flask-Login","Password hashing (werkzeug)","JWT (Flask-JWT-Extended)","OAuth","Session management"]},{name:"API tools",subtopics:["Flask-RESTful","Marshmallow","Flask-CORS","Flask-Caching","Flask-Limiter"]}]},
+  {badge:"FA00",name:"FastAPI fundamentals",sub:"Modern async web framework",
+   topics:[{name:"App structure",subtopics:["FastAPI() instance","@app decorators","Request object","Response object","app.mount()"]},{name:"Routing",subtopics:["Path parameters","Query parameters","Request body","Forms and files","Header/cookie params"]},{name:"Responses",subtopics:["JSONResponse","Response model","Status codes","Streaming responses","File responses"]},{name:"Async",subtopics:["async def","Await in endpoints","Database async","External API async","Background tasks"]}]},
+  {badge:"FA01",name:"FastAPI dependency injection",sub:"The Depends system",
+   topics:[{name:"Dependency system",subtopics:["Depends() function","Sub-dependencies","Class-based dependencies","Cached dependencies","Yield dependencies (cleanup)"]},{name:"Built-in dependencies",subtopics:["Query","Body","Header","Cookie","Path"]},{name:"Database patterns",subtopics:["SQLAlchemy async","get_db()","Dependency override","Connection pooling","Transactions"]},{name:"Authentication",subtopics:["OAuth2PasswordBearer","JWT tokens","Password hashing","Scopes","Depends with auth"]}]},
+  {badge:"FA02",name:"FastAPI data validation",sub:"Pydantic integration",
+   topics:[{name:"Pydantic models",subtopics:["BaseModel","Field()","Validation","Type coercion","Custom validators"]},{name:"Advanced types",subtopics:["Union types","Optional fields","Nested models","Aliasing","Generic models"]},{name:"Serialization",subtopics:["Model.dict()","Model.json()","Config (exclude, include)","Custom encoders","ORM models to schema"]},{name:"Response models",subtopics:["Response model parameter","Exclude fields","Include fields","Status with model","Background tasks"]}]},
+  {badge:"FA03",name:"FastAPI security",sub:"Authentication & authorization",
+   topics:[{name:"OAuth2",subtopics:["OAuth2PasswordBearer","Password flow","Token URL","Token response","Refresh tokens"]},{name:"JWT",subtopics:["JWTencode","JWTdecode","JWT verification","Algorithm selection","Custom claims"]},{name:"Scopes",subtopics:["Scope-based access","Scope dependency","Role checking","Permission system","OAuth2 scopes"]},{name:"Password handling",subtopics:["bcrypt hashing","Password verification","Password policies","Reset tokens","Email verification"]}]},
+  {badge:"FA04",name:"FastAPI APIs",sub:"Building modern APIs",
+   topics:[{name:"REST patterns",subtopics:["CRUD routing","Pagination","Filtering","Sorting","Search"]},{name:"WebSocket",subtopics:["websocket route","WebSocket manager","Room management","Broadcasting","Authentication"]},{name:"Background tasks",subtopics:["BackgroundTasks","Task functions","Waiting for tasks","Error handling"]},{name:"Testing",subtopics:["TestClient","AsyncClient","Testing dependencies","Mocking","Pytest fixtures"]}]},
+  {badge:"FA05",name:"FastAPI deployment",sub:"Production FastAPI",
+   topics:[{name:"ASGI server",subtopics:["Uvicorn","Gunicorn with Uvicorn","Hypercorn","UVLoop","Process management"]},{name:"Docker",subtopics:["Dockerfile","Python Alpine","Non-root user","Healthcheck","Multi-stage build"]},{name:"Production config",subtopics:["Environment variables","Config management","Logging","Metricsexport","Graceful shutdown"]},{name:"Performance",subtopics:["Connection limits","Worker processes","Memory management","Caching","Database pooling"]}]},
+  {badge:"DB00",name:"SQL with Python",sub:"Database integration",
+   topics:[{name:"SQLAlchemy core",subtopics:["Engine and connection","Table() definition","Column types","insert, select, update, delete"," Where clauses"]},{name:"SQLAlchemy ORM",subtopics:["Declarative base","Session","Model class","Relationship()","Query API"]},{name:"Migrations",subtopics:["Alembic init","create revision","upgrade, downgrade","Seed data","Rollback"]},{name:"Async SQLAlchemy",subtopics:["create_async_engine","AsyncSession","AsyncResult","One-shot","Stream results"]}]},
+  {badge:"DB01",name:"PostgreSQL",sub:"Advanced database",
+   topics:[{name:"PostgreSQL basics",subtopics:["psql console","CREATE TABLE","ALTER TABLE","Indexes","Constraints"]},{name:"Advanced queries",subtopics:["JOINs (inner, outer, left, right)","GROUP BY, HAVING","Window functions","CTEs (WITH)","Recursive CTEs"]},{name:"Performance",subtopics:["EXPLAIN ANALYZE","Index strategy","Query optimization","Connection pooling","Partitioning"]},{name:"Replication",subtopics:["Read replicas","Write master","Replication slots","Failover","Connection poolers"]}]},
+  {badge:"DB02",name:"MongoDB with Python",sub:"NoSQL document database",
+   topics:[{name:"PyMongo",subtopics:["MongoClient","Database and collection","Document structure","insert_one, insert_many","find_one, find"]},{name:"Updates & deletes",subtopics:["update_one()","update_many()","$set, $unset","Pull and push","delete_one, delete_many"]},{name:"Aggregation",subtopics:["Aggregation pipeline","$match, $group, $sort","$project","$lookup (joins)","Pipeline expressions"]},{name:"Async MongoDB",subtopics:["Motor (async driver)","Async cursor","Document validation","Schema enforcement"]}]},
+  {badge:"AP00",name:"RESTful API design",sub:"API architecture principles",
+   topics:[{name:"Resource design",subtopics:["Naming conventions (plural)","Hierarchical URLs","Relationships","Search vs filter","Pagination URLs"]},{name:"HTTP semantics",subtopics:["GET (read)","POST (create)","PUT/PATCH (update)","DELETE (delete)","Idempotency"]},{name:"Responses",subtopics:["Status codes (200, 201, 400, 401, 404, 500)","Error response format","Metadata","Pagination","Versioning"]},{name:"Best practices",subtopics:["Versioning strategy","Rate limiting","Caching headers","Content negotiation","HATEOAS"]}]},
+  {badge:"AP01",name:"GraphQL with Python",sub:"Flexible query language",
+   topics:[{name:"GraphQL basics",subtopics:["Schema definition","Query type","Mutation type","Resolve functions","Root value"]},{name:"Ariadne/Graphene",subtopics:["Ariadne schema","Type definitions","QuerySet","ObjectType (Graphene)","resolve_field"]},{name:"N+1 problem",subtopics:["DataLoader concept","Batching","Caching","Key function","Promise/list"]},{name:"Subscriptions",subtopics:["Subscription type","WebSocket transport","Pub/Sub","Async iterators"]}]},
+  {badge:"AP02",name:"WebSocket real-time",sub:"Bidirectional communication",
+   topics:[{name:"WebSocket protocol",subtopics:["Connection handshake","Frame types","Ping/Pong","Close frame","Subprotocols"]},{name:"Python WebSockets",subtopics:["websockets library","asyncio server","Connection handling","Message format","State management"]},{name:"Patterns",subtopics:["Room management","Broadcasting","Presence","Typing indicators","Real-time updates"]},{name:"Production",subtopics:["Redis pub/sub","Backplane","Connection limits","Reconnection","Heartbeat"]}]},
+  {badge:"AP03",name:"Async Python",sub:"Concurrent execution",
+   topics:[{name:"asyncio",subtopics:["async/await syntax","Event loop","Task creation","Gather","Wait for"]},{name:"Async patterns",subtopics:["aiohttp","aiodns","asyncio.gather","Semaphores","Locking"]},{name:"Parallelism",subtopics:["multiprocessing","Process pool","Thread pool","Executor","Celery basics"]},{name:"Queues",subtopics:["Celery fundamentals","Task definition","Brokers (Redis, RabbitMQ)","Task routing","Periodic tasks"]}]},
+  {badge:"AP04",name:"Testing Python APIs",sub:"Reliable API development",
+   topics:[{name:"Pytest",subtopics:["test functions","Fixtures","Parametrization","Marks","Async testing"]},{name:"API testing",subtopics:["TestClient (Flask)","TestClient (FastAPI)","AsyncClient","Request mocking","Response assert"]},{name:"Integration testing",subtopics:["Database fixtures","Transaction rollback","External APIs","Auth tokens","Load testing (locust)"]},{name:"Mocking",subtopics:["unittest.mock","Patch functions","Mock API calls","Factory fixtures","Faker"]}]},
+  {badge:"AP05",name:"Python deployment",sub:"Production Python",
+   topics:[{name:"Server setup",subtopics:["Nginx configuration","Gunicorn setup","Process manager (systemd)","Environment variables","Logging"]},{name:"Docker",subtopics:["Dockerfile best practices","Python slim Alpine","Requirements management","Non-root user","Multi-stage build"]},{name:"Cloud deployment",subtopics:["Railway","Render","Fly.io","AWS ECS","GCP Cloud Run"]},{name:"CI/CD",subtopics:["GitHub Actions","pytest-runner","Coverage reporting","Security scanning","Deployment triggers"]}]},
+];
+
+const js = [
+  {badge:"JS00",name:"JavaScript fundamentals",sub:"Core language — syntax, types, execution",
+   topics:[{name:"Variables & scoping",subtopics:["var, let, const differences","Temporal dead zone","Function vs block scope","Hoisting","Closures"]},{name:"Primitive types",subtopics:["undefined, null, boolean","Number (IEEE 754)","BigInt for large integers","Symbol for unique IDs","String interning"]},{name:"Type coercion",subtopics:["Implicit vs explicit coercion","== vs === semantics","Truthy/falsy values","Object wrapper types","NaN and Infinity"]},{name:"Operators",subtopics:["Arithmetic operators","Bitwise operators","Logical operators","Destructuring assignment","Optional chaining"]}]},
+  {badge:"JS01",name:"Functions",sub:"First-class citizens — behavior as data",
+   topics:[{name:"Function declarations",subtopics:["Function expression vs declaration","Arrow functions vs regular","Immediately Invoked (IIFE)","Generator functions","Async functions"]},{name:"Parameters",subtopics:["Rest parameters","Default parameters","Arguments object","Parameter destructuring","Callback patterns"]},{name:"Advanced patterns",subtopics:["Currying and partial application","Function composition","Memoization","Recursive functions","Higher-order functions"]}]},
+  {badge:"JS02",name:"Objects & prototypes",sub:"Prototype chain — OOP without classes",
+   topics:[{name:"Object creation",subtopics:["Object literals","Factory functions","Constructor functions","Object.create()","Reflect and Proxy"]},{name:"Prototype system",subtopics:["[[Prototype]] chain","Prototype property","Object.setPrototypeOf()","__proto__ vs prototype","Prototype chain traversal"]},{name:"Property descriptors",subtopics:["Writable, enumerable, configurable","Data vs accessor descriptors","Object.defineProperty()","Object.freeze/seal","Getters and setters"]}]},
+  {badge:"JS03",name:"ES6+ modern JavaScript",sub:"Language evolution — productivity",
+   topics:[{name:"Syntax",subtopics:["let/const block scoping","Template literals","Destructuring (array, object)","Spread operator","Rest parameters"]},{name:"Modules",subtopics:["ES modules (import/export)","Dynamic imports","Named vs default exports","Circular dependencies","Export bindings"]},{name:"Classes",subtopics:["class syntax","Constructor and methods","Static methods","Private fields (#)","extends and super"]},{name:"Data structures",subtopics:["Map and WeakMap","Set and WeakSet","ArrayBuffer and TypedArrays","Object.entries/values/keys"]}]},
+  {badge:"JS04",name:"Async JavaScript",sub:"Handling time and concurrency",
+   topics:[{name:"Callbacks",subtopics:["Callback patterns","Error-first callbacks","Callback hell","Event emitter","setTimeout/setInterval internals"]},{name:"Promises",subtopics:["Promise states (pending/fulfilled/rejected)","Promise chaining","Promise.all, race, allSettled","Async/await","Error handling in promises"]},{name:"Event loop",subtopics:["Call stack and heap","Macrotasks vs microtasks","setImmediate and queueMicrotask","process.nextTick","Async iteration"]}]},
+  {badge:"R00",name:"React fundamentals",sub:"Components, props, state — building UI",
+   topics:[{name:"Core concepts",subtopics:["Function components","JSX syntax","Props passing","Children props","Component composition"]},{name:"State management",subtopics:["useState hook","useReducer hook","State vs props","Immutability in state","State colocation"]},{name:"Lifecycle",subtopics:["useEffect hook","Dependency array","Cleanup functions","Strict mode effects","useLayoutEffect"]},{name:"Event handling",subtopics:["Synthetic events","Event handlers","Form handling","Controlled vs uncontrolled","Prevent default"]}]},
+  {badge:"R01",name:"React hooks deep dive",sub:"Mastering the hook API",
+   topics:[{name:"Essential hooks",subtopics:["useState and state updates","useEffect and side effects","useRef for values","useContext for theme/data","useCallback memoization"]},{name:"Advanced hooks",subtopics:["useMemo for expensive calculations","Custom hooks","useReducer for complex state","useImperativeHandle","useDebugValue"]},{name:"Hook patterns",subtopics:["Colocating state","Extracting custom hooks","Hook composition","Reducer + Context","Lazy initialization"]},{name:"Performance hooks",subtopics:["React.memo","useMemo dependency hints","useCallback functions","Virtual list optimization","Code splitting"]}]},
+  {badge:"R02",name:"React patterns",sub:"Proven component patterns",
+   topics:[{name:"Compound components",subtopics:["Flexible API design","Context for communication","implicit state","Render props pattern","API flattening"]},{name:"Higher-order patterns",subtopics:["Higher-order components (HOC)","Render props","Container/presenter","Enhance pattern","Wrapper components"]},{name:"State patterns",subtopics:["Context for global state","Reducer patterns","Normalized state","Optimistic updates","Undo/redo pattern"]},{name:"Error handling",subtopics:["Error boundaries","componentDidCatch","Error resets","Fallback components","Retry patterns"]}]},
+  {badge:"R03",name:"React ecosystem",sub:"Libraries for React development",
+   topics:[{name:"Routing",subtopics:["React Router fundamentals","Dynamic routing","Route parameters","Nested routes","Route guards and redirects"]},{name:"Forms",subtopics:["React Hook Form","Yup validation","Formik","Controlled inputs","File uploads"]},{name:"Data fetching",subtopics:["TanStack Query (React Query)","SWR","Axios setup","Loading states","Error handling"]},{name:"Styling",subtopics:["CSS Modules","Styled components","Tailwind CSS","Emotion","CSS-in-JS patterns"]}]},
+  {badge:"R04",name:"React performance",sub:"Speed at scale",
+   topics:[{name:"Rendering optimization",subtopics:["React.memo and PureComponent","useMemo/useCallback","Avoid re-renders","Virtualization","Windowing lists"]},{name:"Code splitting",subtopics:["React.lazy and Suspense","Route-based splitting","Component-level lazy","Preloading","Bundle analysis"]},{name:"Rendering modes",subtopics:["Concurrent mode","useTransition","useDeferredValue","Start transition","Batching"]},{name:"Debugging",subtopics:["React DevTools Profiler","Performance timeline","Component measurements","DevTools breakpoints","Error stack traces"]}]},
+  {badge:"R05",name:"React testing",sub:"Reliable React components",
+   topics:[{name:"Unit testing",subtopics:["Jest fundamentals","React Testing Library","Query methods (getBy, findBy, queryBy)","Fire events","Assert presence"]},{name:"Component testing",subtopics:["Props testing","State testing","Interaction testing","Async components","Error boundaries"]},{name:"Hooks testing",subtopics:["@testing-library/react-hooks","renderHook","act() wrapper","Mock functions","State assertions"]},{name:"Integration testing",subtopics:["Router testing","Context providers","Form testing","API mocking","MSW setup"]}]},
+  {badge:"TS00",name:"TypeScript essentials",sub:"Static typing for JavaScript",
+   topics:[{name:"Type annotations",subtopics:["Explicit types","Type inference","any vs unknown vs void","never type","Type aliases"]},{name:"Type system",subtopics:["Union types","Intersection types","Literal types","Type guards","Discriminated unions"]},{name:"Configuration",subtopics:["tsconfig.json options","strict mode","Target and module","Declaration files (.d.ts)","outDir and rootDir"]},{name:"Compiler",subtopics:["Build mode","Watch mode","Incremental compilation","Project references","Emit control"]}]},
+  {badge:"TS01",name:"TypeScript advanced",sub:"Mastering the type system",
+   topics:[{name:"Generics",subtopics:["Generic constraints","Generic functions","Generic classes","infer keyword","Conditional types"]},{name:"Utility types",subtopics:["Partial, Required, Readonly","Pick and Omit","Record","Extract and Exclude","ReturnType and Parameters"]},{name:"Advanced patterns",subtopics:["Template literal types","Mapped types","satisfies operator","const type parameters","Type-level programming"]},{name:"Declaration merging",subtopics:["Module augmentation","Global declarations","Ambient modules","Umbrella packages","Triple-slash references"]}]},
+  {badge:"TS02",name:"TypeScript with React",sub:"Typed React development",
+   topics:[{name:"Component types",subtopics:["Function component types","React.FC","ComponentProps","Ref forwarding","Generic components"]},{name:"Hooks types",subtopics:["useState<T>","useEffect<T>","useRef<T>","useCallback types","Custom hook generics"]},{name:"Event types",subtopics:["Synthetic events","Form events","Change events","Mouse events","Keyboard events"]},{name:"Context types",subtopics:["Context Types","createContext generics","Provider typing","Default values","Context consumers"]}]},
+  {badge:"TS03",name:"TypeScript patterns",sub:"Real-world TypeScript",
+   topics:[{name:"API types",subtopics:["Response types","Error handling types","Zod validation","Runtime validation","Type-safe fetch"]},{name:"State types",subtopics:["Reducer state types","Action types","Immutability typing","State machines","Serialized state"]},{name:"Testing types",subtopics:["Mock functions","Mock modules","Testing library types","Fixture types"]}]},
+  {badge:"RX00",name:"Next.js",sub:"Full-stack React framework",
+   topics:[{name:"App Router",subtopics:["app directory","Layouts","Routes","Route handlers","Loading and error states"]},{name:"Data fetching",subtopics:["SWR with fetch","TanStack Query","React Query fetcher","Parallel queries","Prefetching"]},{name:"Rendering",subtopics:["Server components (RSC)","Client components","Streaming","Suspense","SSR, SSG, ISR"]},{name:"API & auth",subtopics:["Route handlers","NextAuth.js","Middleware","Cookies","Protected routes"]},{name:"Deployment",subtopics:["Vercel","Edge functions","Image optimization","Bundle analysis"]}]},
+  {badge:"N00",name:"Node.js fundamentals",sub:"JavaScript outside the browser",
+   topics:[{name:"Runtime architecture",subtopics:["V8 engine","libuv and event loop","Node bindings","Global objects","Process and argv"]},{name:"File system",subtopics:["fs module (sync, async, promises)","Watch files","Path manipulation","Streaming files","Directory operations"]},{name:"Modules",subtopics:["require() vs import","CommonJS vs ESM","module resolution","node_modules","Package.json fields"]},{name:"Error handling",subtopics:["Synchronous errors","Async error patterns","Error-first callbacks","try/catch in async","Custom errors"]}]},
+  {badge:"N01",name:"Express fundamentals",sub:"Web application framework",
+   topics:[{name:"App structure",subtopics:["express() instance","app.use() middleware","Request object","Response object","Next function"]},{name:"Routing",subtopics:["app.METHOD()","Route parameters","Query parameters","Middleware stacking","Router mounting"]},{name:"Middleware",subtopics:["Third-party middleware","Custom middleware","Error-handling middleware","Body parsing","Static files"]},{name:"Request/Response",subtopics:["req.params, req.query","req.body","res.json(), res.send()","res.status()","res.redirect()"]}]},
+  {badge:"N02",name:"Express APIs",sub:"Building RESTful APIs",
+   topics:[{name:"REST principles",subtopics:["Resource naming","HTTP methods","Status codes","Idempotency","Best practices"]},{name:"Data handling",subtopics:["JSON parsing","Form parsing","File uploads (multer)","Validation (Joi, Zod)","Sanitization"]},{name:"Error handling",subtopics:["Sync vs async errors","Error middleware","404 handling","Global error handler","Error logging"]},{name:"CORS & security",subtopics:["CORS configuration","Helmet middleware","Rate limiting","Request size limits","Trust proxy"]}]},
+  {badge:"N03",name:"Express & databases",sub:"Persistent data in Express",
+   topics:[{name:"Database patterns",subtopics:["Connection pooling","Repository pattern","Query building","Transactions","ORM/ODM integration"]},{name:"MongoDB with Mongoose",subtopics:["Schema definition","Models and documents","Queries (find, findOne, update)","Virtuals and methods","Middleware (pre, post)"]},{name:"PostgreSQL with Prisma",subtopics:["Schema.prisma","Client instantiation","CRUD operations","Relations","Migrations"]},{name:"Testing databases",subtopics:["Test containers","In-memory databases","Fixture loading","Transaction rollback","Factory patterns"]}]},
+  {badge:"N04",name:"Express authentication",sub:"Securing Express APIs",
+   topics:[{name:"JWT implementation",subtopics:["JWT signing","JWT verification","Token storage","Refresh tokens","Token invalidation"]},{name:"Middleware",subtopics:["Authentication middleware","Authorization middleware","Role-based access","Session management","Cookie vs Bearer"]},{name:"Password handling",subtopics:["bcrypt hashing","Password validation","Forget/reset flow","Account verification","Security best practices"]},{name:"OAuth",subtopics:["OAuth 2.0 flow","Google provider","GitHub provider","Session handling","Redirect URIs"]}]},
+  {badge:"N05",name:"Express deployment",sub:"Production Express apps",
+   topics:[{name:"Production config",subtopics:["Environment variables","NODE_ENV","Graceful shutdown","Health checks","Logging (morgan, pino)"]},{name:"PM2 setup",subtopics:["PM2 fundamentals","Cluster mode","Environment configs","Deploy scripts","Log management"]},{name:"Docker",subtopics:["Dockerfile","Node Alpine image","Non-root user","Healthcheck","Multi-stage build"]},{name:"Testing",subtopics:["Supertest setup","Fixture injection","Error case testing","Async testing","Coverage"]}]},
+  {badge:"N06",name:"Full-stack patterns",sub:"React + Express together",
+   topics:[{name:"API communication",subtopics:["Fetch/axios","Base URL config","Interceptors","Error handling","Loading states"]},{name:"Authentication flow",subtopics:["Login form","Token storage (localStorage vs cookies)","Auth headers","Token refresh","Logout"]},{name:"State management",subtopics:["React Query integration","SWR with Express","TanStack Query","Server-state","Client vs server state"]},{name:"Error handling",subtopics:["Network errors","API error responses","User feedback","Retry logic","Offline handling"]}]},
+  {badge:"N07",name:"Express ecosystem",sub:"Advanced Express patterns",
+   topics:[{name:"Validation libraries",subtopics:["Zod schema","Joi validation","express-validator","Runtime validation","Schema composition"]},{name:"API documentation",subtopics:["OpenAPI/Swagger","JSDoc generation","API versioning","Deprecation handling","Changes log"]},{name:"WebSockets",subtopics:["Socket.io setup","Room management","Event handling","Broadcasting","Authentication"]},{name:"Testing advanced",subtopics:["Integration specs","Database mocking","Auth testing","Load testing","Contract testing"]}]},
+];
+
+let openCount = 0;
+
+function makePhase(p, i, isMath, isJS, isPython, isDB, isWeb) {
+  let colorClass;
+  if (isJS) colorClass = 'c-pink';
+  else if (isPython) colorClass = 'c-orange';
+  else if (isDB) colorClass = 'c-blue';
+  else if (isWeb) colorClass = 'c-teal';
+  else colorClass = colors[i % colors.length];
+  const newTag = p.isNew ? `<span class="new-tag">added</span>` : '';
+
+  const div = document.createElement('div');
+  div.className = `phase ${colorClass}`;
+
+  const topicsHTML = p.topics.map((t) => {
+    if (typeof t === 'object' && t.subtopics) {
+      return `<div class="topic-group">
+        <span class="topic-tag topic-main">${t.name}</span>
+        <div class="subtopics">
+          ${t.subtopics.map(s => `<span class="topic-tag sub" style="margin-left:8px;margin-top:2px;">${s}</span>`).join('')}
+        </div>
+      </div>`;
+    } else {
+      return `<span class="topic-tag">${t}</span>`;
+    }
+  }).join('');
+
+  div.innerHTML = `
+    <div class="phase-header">
+      <div class="phase-num">${p.badge}</div>
+      <div class="phase-info">
+        <div class="phase-name">${p.name}${newTag}</div>
+        <div class="phase-sub">${p.sub}</div>
+      </div>
+      <div class="phase-pill">${isMath ? 'math' : 'cs'}</div>
+      <div class="phase-arrow">›</div>
+    </div>
+    <div class="phase-body">
+      <div class="topics-row">
+        ${topicsHTML}
+      </div>
+    </div>`;
+
+  div.querySelector('.phase-header').addEventListener('click', () => {
+    const isOpen = div.classList.contains('is-open');
+    div.classList.toggle('is-open');
+    openCount += isOpen ? -1 : 1;
+    updateStats();
+  });
+
+  return div;
+}
+
+function makeConnector() {
+  const d = document.createElement('div');
+  d.className = 'connector';
+  d.innerHTML = '<div class="connector-line"></div>';
+  return d;
+}
+
+function updateStats() {
+  const total = cs.length + math.length + js.length + py.length + db.length + web.length;
+  const openEl = document.getElementById('open-count');
+  if (openEl) openEl.textContent = openCount + ' expanded';
+  const progressTextEl = document.getElementById('progress-text');
+  if (progressTextEl) progressTextEl.textContent = openCount + ' / ' + total + ' expanded';
+  const progressFillEl = document.getElementById('progress-fill');
+  const pct = total > 0 ? Math.round((openCount / total) * 100) : 0;
+  if (progressFillEl) progressFillEl.style.width = pct + '%';
+}
+
+const csCol = document.getElementById('cs-col');
+document.getElementById('cs-count').textContent = cs.length + ' phases in CS';
+document.getElementById('cs-phase-count').textContent = cs.length;
+
+console.log('CS col:', csCol, 'CS length:', cs.length);
+cs.forEach((p, i) => {
+  console.log('CS phase:', p.name);
+  csCol.appendChild(makePhase(p, i, false, false, false, false, false));
+  if (i < cs.length - 1) csCol.appendChild(makeConnector());
+});
+console.log('CS done, children:', csCol.children.length);
+
+const mathCol = document.getElementById('math-col');
+document.getElementById('math-count').textContent = math.length + ' phases in Math';
+document.getElementById('math-phase-count').textContent = math.length;
+
+math.forEach((p, i) => {
+  mathCol.appendChild(makePhase(p, i, true, false, false, false, false));
+  if (i < math.length - 1) mathCol.appendChild(makeConnector());
+});
+
+const jsCol = document.getElementById('js-col');
+document.getElementById('js-count').textContent = js.length + ' phases';
+document.getElementById('js-phase-count').textContent = js.length;
+
+js.forEach((p, i) => {
+  jsCol.appendChild(makePhase(p, i, false, true, false, false, false));
+  if (i < js.length - 1) jsCol.appendChild(makeConnector());
+});
+
+const pyCol = document.getElementById('py-col');
+document.getElementById('py-count').textContent = py.length + ' phases';
+document.getElementById('py-phase-count').textContent = py.length;
+
+py.forEach((p, i) => {
+  pyCol.appendChild(makePhase(p, i, false, false, true, false, false));
+  if (i < py.length - 1) pyCol.appendChild(makeConnector());
+});
+
+const dbCol = document.getElementById('db-col');
+document.getElementById('db-count').textContent = db.length + ' phases';
+document.getElementById('db-phase-count').textContent = db.length;
+
+db.forEach((p, i) => {
+  dbCol.appendChild(makePhase(p, i, false, false, false, true, false));
+  if (i < db.length - 1) dbCol.appendChild(makeConnector());
+});
+
+const webCol = document.getElementById('web-col');
+document.getElementById('web-count').textContent = web.length + ' phases';
+document.getElementById('web-phase-count').textContent = web.length;
+
+web.forEach((p, i) => {
+  webCol.appendChild(makePhase(p, i, false, false, false, false, true));
+  if (i < web.length - 1) webCol.appendChild(makeConnector());
+});
+
+updateStats();
+</script>
 </body>
 </html>
